@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -43,6 +44,8 @@ public class Event {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User initiator;
+    @Embedded
+    private Location location;
     @Column(name = "paid")
     private Boolean paid;
     @Column(name = "participant_limit")

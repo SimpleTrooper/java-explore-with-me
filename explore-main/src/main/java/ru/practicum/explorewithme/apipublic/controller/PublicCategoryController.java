@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.explorewithme.apipublic.dto.CategoryDto;
+import ru.practicum.explorewithme.apipublic.dto.PublicCategoryDto;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import java.util.List;
 @RequestMapping("/categories")
 public class PublicCategoryController {
     @GetMapping
-    public List<CategoryDto> findAll(@RequestParam(defaultValue = "0") Integer from,
-                                     @RequestParam(defaultValue = "10") Integer size) {
+    public List<PublicCategoryDto> findAll(@RequestParam(defaultValue = "0") Integer from,
+                                           @RequestParam(defaultValue = "10") Integer size) {
         return null;
     }
 
     @GetMapping("/{categoryId}")
-    public CategoryDto findById(@PathVariable Long categoryId) {
+    public PublicCategoryDto findById(@PathVariable Long categoryId) {
         return null;
     }
 }

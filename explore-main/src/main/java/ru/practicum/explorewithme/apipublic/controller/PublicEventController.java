@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.explorewithme.apipublic.dto.EventFullDto;
-import ru.practicum.explorewithme.apipublic.dto.EventShortDto;
+import ru.practicum.explorewithme.apipublic.dto.PublicEventFullDto;
+import ru.practicum.explorewithme.apipublic.dto.PublicEventShortDto;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
 @RequestMapping("/events")
 public class PublicEventController {
     @GetMapping
-    public List<EventShortDto> findAll() {
+    public List<PublicEventShortDto> findAll() {
         return null;
     }
 
     @GetMapping("/eventId")
-    public EventFullDto findById() {
+    public PublicEventFullDto findById() {
         return null;
     }
 }

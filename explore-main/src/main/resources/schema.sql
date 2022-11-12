@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS events (
     description TEXT,
     category_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
+    location_lat FLOAT,
+    location_lon FLOAT,
     paid BOOLEAN NOT NULL,
     participant_limit INT,
     request_moderation BOOLEAN NOT NULL,
