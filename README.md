@@ -1,3 +1,5 @@
+[Пул-реквест](https://github.com/SimpleTrooper/java-explore-with-me/pull/1)
+
 # Explore with me.
 REST-API для приложения организации ивентов.
 
