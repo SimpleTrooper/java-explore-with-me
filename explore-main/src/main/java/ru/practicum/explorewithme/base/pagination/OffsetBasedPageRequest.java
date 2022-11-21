@@ -22,4 +22,8 @@ public class OffsetBasedPageRequest extends PageRequest {
     public static OffsetBasedPageRequest of(int from, int size, Sort sort) {
         return new OffsetBasedPageRequest(from, size, sort);
     }
+
+    public static OffsetBasedPageRequest of(int from, int size) {
+        return new OffsetBasedPageRequest(from, size, Sort.unsorted());
+    }
 }

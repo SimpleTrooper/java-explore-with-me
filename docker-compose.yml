@@ -7,6 +7,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/explore-stat
       - SPRING_DATASOURCE_USERNAME=explore-stat
       - SPRING_DATASOURCE_PASSWORD=explore-stat
+      - EXPLORE_REMOTE_SERVICE_URL=http://ewm-service:8080
     ports:
       - "9090:9090"
     depends_on:
@@ -28,7 +29,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/explore
       - SPRING_DATASOURCE_USERNAME=explore
       - SPRING_DATASOURCE_PASSWORD=explore
-      - STAT_SERVER_URL=http://stats-server:9090
+      - EXPLORE_REMOTE_SERVICE_URL=http://stats-server:9090
     ports:
       - "8080:8080"
     depends_on:

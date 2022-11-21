@@ -1,8 +1,9 @@
 package ru.practicum.explorewithme.base.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -10,21 +11,26 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Сущность события
  */
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "events")
 public class Event {
@@ -38,10 +44,12 @@ public class Event {
     private String annotation;
     @Column(name = "description")
     private String description;
-    @ManyToOne
+    @Column(name = "event_date")
+    private LocalDateTime eventDate;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User initiator;
     @Embedded
@@ -58,5 +66,7 @@ public class Event {
     @Column(name = "event_state")
     private EventState eventState;
     @Column(name = "published")
-    private String publishedOn;
+    private LocalDateTime publishedOn;
+    @ManyToMany(mappedBy = "events")
+    private List<Compilation> compilations = new ArrayList<>();
 }

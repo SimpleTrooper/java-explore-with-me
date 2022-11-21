@@ -1,13 +1,16 @@
 package ru.practicum.explorewithme.admin.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.practicum.explorewithme.base.model.Category;
+import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
 import ru.practicum.explorewithme.base.model.Location;
-
-import java.time.LocalDateTime;
+import ru.practicum.explorewithme.base.model.User;
+import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
 
 /**
  * Полное DTO события - admin API
@@ -16,19 +19,20 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AdminEventFullDto {
     private String annotation;
     private CategoryDto category;
-    private Integer confirmedRequests;
-    private LocalDateTime createdOn;
+    private Long confirmedRequests;
+    private String createdOn;
     private String description;
-    private LocalDateTime eventDate;
+    private String eventDate;
     private Long id;
     private UserShortDto initiator;
     private Location location;
     private Boolean paid;
     private Integer participantLimit;
-    private LocalDateTime publishedOn;
+    private String publishedOn;
     private Boolean requestModeration;
     private EventState state;
     private String title;
@@ -38,17 +42,46 @@ public class AdminEventFullDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    static class CategoryDto {
+    public static class CategoryDto {
         private Long id;
         private String name;
+
+        public static CategoryDto from(Category category) {
+            return new CategoryDto(category.getId(), category.getName());
+        }
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    static class UserShortDto {
+    public static class UserShortDto {
         private Long id;
         private String name;
+
+        public static UserShortDto from(User user) {
+            return new UserShortDto(user.getId(), user.getUsername());
+        }
+    }
+
+    public static AdminEventFullDto from(Event event, Long confirmedRequests, Long views) {
+        return AdminEventFullDto.builder()
+                .annotation(event.getAnnotation())
+                .category(CategoryDto.from(event.getCategory()))
+                .confirmedRequests(confirmedRequests)
+                .createdOn(ExploreDateFormatter.format(event.getCreatedOn()))
+                .description(event.getDescription())
+                .eventDate(ExploreDateFormatter.format(event.getEventDate()))
+                .id(event.getId())
+                .initiator(UserShortDto.from(event.getInitiator()))
+                .location(event.getLocation())
+                .paid(event.getPaid())
+                .participantLimit(event.getParticipantLimit())
+                .publishedOn(ExploreDateFormatter.format(event.getPublishedOn()))
+                .requestModeration(event.getRequestModeration())
+                .state(event.getEventState())
+                .title(event.getTitle())
+                .views(views)
+                .build();
     }
 }

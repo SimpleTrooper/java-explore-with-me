@@ -5,6 +5,7 @@ package ru.practicum.explorewithme.base.model;
  */
 public enum RequestState {
     PENDING, //Ожидание подтверждения/отказа
-    ACCEPTED, //Принято
-    REJECTED //Отклонено
+    CONFIRMED, //Принято
+    REJECTED, //Отклонено
+    CANCELED //Запрос отменен пользователем
 }

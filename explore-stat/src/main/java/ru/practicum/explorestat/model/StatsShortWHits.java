@@ -1,4 +1,4 @@
-package ru.practicum.explorestat.dto;
+package ru.practicum.explorestat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * DTO для отправки статистики
+ * Короткая версия статистики с количеством просмотров
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ViewStatsDto {
+public class StatsShortWHits {
     private String app;
     private String uri;
     private Long hits;

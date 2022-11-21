@@ -1,11 +1,14 @@
 package ru.practicum.explorewithme.apiprivate.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import ru.practicum.explorewithme.base.model.Category;
+import ru.practicum.explorewithme.base.model.Event;
+import ru.practicum.explorewithme.base.model.User;
+import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
 
 /**
  * Короткое DTO события - private API
@@ -14,11 +17,12 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PrivateEventShortDto {
     private String annotation;
     private CategoryDto category;
-    private Integer confirmedRequests;
-    private LocalDateTime eventDate;
+    private Long confirmedRequests;
+    private String eventDate;
     private Long id;
     private UserShortDto initiator;
     private Boolean paid;
@@ -29,17 +33,39 @@ public class PrivateEventShortDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    static class CategoryDto {
+    public static class CategoryDto {
         private Long id;
         private String name;
+
+        public static CategoryDto from(Category category) {
+            return new CategoryDto(category.getId(), category.getName());
+        }
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    static class UserShortDto {
+    public static class UserShortDto {
         private Long id;
         private String name;
+
+        public static UserShortDto from(User user) {
+            return new UserShortDto(user.getId(), user.getUsername());
+        }
+    }
+
+    public static PrivateEventShortDto from(Event event, Long confirmedRequests, Long views) {
+        return PrivateEventShortDto.builder()
+                .annotation(event.getAnnotation())
+                .category(CategoryDto.from(event.getCategory()))
+                .confirmedRequests(confirmedRequests)
+                .eventDate(ExploreDateFormatter.format(event.getEventDate()))
+                .id(event.getId())
+                .initiator(UserShortDto.from(event.getInitiator()))
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .views(views)
+                .build();
     }
 }

@@ -19,13 +19,40 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<querydsl.version>5.0.0</querydsl.version>
+		<spring-cloud.version>2021.0.5</spring-cloud.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
 		<module>explore-main</module>
 		<module>explore-stat</module>
-	</modules>
+        <module>explore-client</module>
+    </modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<pluginManagement>
@@ -37,6 +64,9 @@
 						<systemPropertyVariables>
 							<spring.profiles.active>test</spring.profiles.active>
 						</systemPropertyVariables>
+						<environmentVariables>
+							<EXPLORE_REMOTE_SERVICE_URL>http://localhost:9090</EXPLORE_REMOTE_SERVICE_URL>
+						</environmentVariables>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -188,5 +218,4 @@
 			</build>
 		</profile>
 	</profiles>
-
 </project>
