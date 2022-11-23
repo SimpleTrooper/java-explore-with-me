@@ -19,9 +19,10 @@ import java.util.List;
 public interface FeignClientForStats {
     /**
      * Получить статистику
-     * @param start начало периода, за который нужно выгрузить статистику
-     * @param end конец периода, за который нужно выгрузить статистику
-     * @param uris uri эндпоинтов, для которых нужно выгрузить статистику
+     *
+     * @param start  начало периода, за который нужно выгрузить статистику
+     * @param end    конец периода, за который нужно выгрузить статистику
+     * @param uris   uri эндпоинтов, для которых нужно выгрузить статистику
      * @param unique выгружать статистику только по уникальным ip
      * @return список DTO со статистикой
      */
@@ -33,6 +34,7 @@ public interface FeignClientForStats {
 
     /**
      * Сохранить информацию о том, что к эндпоинту был запрос
+     *
      * @param endpointHit информация о запросе
      */
     @RequestMapping(method = RequestMethod.POST, value = "/hit")

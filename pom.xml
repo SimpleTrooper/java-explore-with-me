@@ -42,18 +42,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -117,6 +105,9 @@
 					<version>0.8.8</version>
 					<configuration>
 						<output>file</output>
+						<excludes>
+							<exclude>ru/practicum/explorewithme/base/model/*</exclude>
+						</excludes>
 					</configuration>
 					<executions>
 						<execution>
@@ -173,6 +164,13 @@
 						<execution>
 							<id>jacoco-site</id>
 							<phase>install</phase>
+							<goals>
+								<goal>report</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>jacoco-report</id>
+							<phase>test</phase>
 							<goals>
 								<goal>report</goal>
 							</goals>

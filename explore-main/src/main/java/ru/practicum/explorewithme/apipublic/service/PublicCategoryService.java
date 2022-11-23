@@ -11,6 +11,7 @@ import java.util.List;
 public interface PublicCategoryService {
     /**
      * Получение категорий
+     *
      * @param paginationRequest запрос пагинации
      * @return Список DTO полученных категорий
      */
@@ -18,6 +19,7 @@ public interface PublicCategoryService {
 
     /**
      * Получение категории по id
+     *
      * @param categoryId id категории
      * @return DTO полученной категории
      */

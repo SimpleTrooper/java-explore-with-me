@@ -9,7 +9,7 @@ import lombok.Setter;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Compilation;
 import ru.practicum.explorewithme.base.model.Event;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.model.User;
 import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
 
@@ -72,11 +72,11 @@ public class PublicCompilationDto {
             }
         }
 
-        public static EventShortDto from(Event event, Long confirmedRequests, Long views) {
+        public static EventShortDto from(Event event, Long views) {
             return EventShortDto.builder()
                     .annotation(event.getAnnotation())
                     .category(CategoryDto.from(event.getCategory()))
-                    .confirmedRequests(confirmedRequests)
+                    .confirmedRequests(event.getConfirmedRequests())
                     .eventDate(ExploreDateFormatter.format(event.getEventDate()))
                     .id(event.getId())
                     .initiator(UserShortDto.from(event.getInitiator()))
@@ -87,9 +87,9 @@ public class PublicCompilationDto {
         }
     }
 
-    public static PublicCompilationDto from(Compilation compilation, List<EventWithReqAndViews> events) {
+    public static PublicCompilationDto from(Compilation compilation, List<EventWithViews> events) {
         List<EventShortDto> shortDtoEvents = events.stream()
-                .map(event -> EventShortDto.from(event.getEvent(), event.getConfirmedRequests(), event.getViews()))
+                .map(event -> EventShortDto.from(event.getEvent(), event.getViews()))
                 .collect(Collectors.toList());
         return PublicCompilationDto.builder()
                 .events(shortDtoEvents)

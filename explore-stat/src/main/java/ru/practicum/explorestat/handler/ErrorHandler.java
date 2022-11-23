@@ -11,11 +11,12 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.practicum.explorestat.controller.StatsController;
+import ru.practicum.explorestat.util.ExceptionParser;
 import ru.practicum.explorestat.util.ExploreDateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -33,61 +34,36 @@ public class ErrorHandler {
      */
     @ExceptionHandler
     public ResponseEntity<ApiError> validationHandler(final MethodArgumentNotValidException ex) {
-        List<String> errors = ex.getBindingResult().getFieldErrors()
+        String message = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(fieldError -> fieldError.getField() +
                         ": " + fieldError.getDefaultMessage())
-                .collect(Collectors.toList());
+                .collect(Collectors.joining("; "));
         String reason = "Validation error.";
-        log.error(reason + errors);
+        log.error(reason + message, ex);
 
-        ApiError error = ApiError.makeApiErrorWBadRequest(errors, reason, null);
+        ApiError error = ApiError.makeApiErrorWBadRequest(Collections.singletonList(ExceptionParser
+                .makeStringFromStackTrace(ex)), reason, message);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     * Обработчик исключения при неверной валидации для MissingServletRequestParameterException
+     * Обработчик исключения при неверной валидации для MissingServletRequestParameterException,
+     * HttpMessageNotReadableException, DataAccessException
+     *
      * @param ex MissingServletRequestParameterException
      * @return описание ошибки, код 400
      */
-    @ExceptionHandler
+    @ExceptionHandler({MissingServletRequestParameterException.class,
+            HttpMessageNotReadableException.class,
+            DataAccessException.class})
     public ResponseEntity<ApiError> validationHandler(final MissingServletRequestParameterException ex) {
         String reason = "Validation error.";
         String message = ex.getMessage();
-        log.error(reason + message);
+        log.error(reason + message, ex);
 
-        ApiError error = ApiError.makeApiErrorWBadRequest(null, reason, ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Обработчик исключения при неверной валидации для HttpMessageNotReadableException
-     * @param ex HttpMessageNotReadableException
-     * @return описание ошибки, код 400
-     */
-    @ExceptionHandler
-    public ResponseEntity<ApiError> validationHandler(final HttpMessageNotReadableException ex) {
-        String reason = "Validation error.";
-        String message = ex.getMessage();
-        log.error(reason + message);
-
-        ApiError error = ApiError.makeApiErrorWBadRequest(null, reason, ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
-    }
-
-
-    /**
-     * Обработчик исключения при неверной валидации для DataAccessException
-     * @param ex DataAccessException
-     * @return описание ошибки, код 400
-     */
-    @ExceptionHandler
-    public ResponseEntity<ApiError> validationHandler(final DataAccessException ex) {
-        String reason = "Validation error.";
-        String message = ex.getMessage();
-        log.error(reason + message);
-
-        ApiError error = ApiError.makeApiErrorWBadRequest(null, reason, ex.getMessage());
+        ApiError error = ApiError.makeApiErrorWBadRequest(Collections.singletonList(ExceptionParser
+                .makeStringFromStackTrace(ex)), reason, message);
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
@@ -101,8 +77,9 @@ public class ErrorHandler {
     public ResponseEntity<ApiError> integrityConstraintHandler(final DataIntegrityViolationException ex) {
         String reason = "Integrity constraint has been violated";
         LocalDateTime timestamp = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        log.error(reason + ex.getMessage());
+        log.error(reason + ex.getMessage(), ex);
         ApiError error = ApiError.builder()
+                .errors(Collections.singletonList(ExceptionParser.makeStringFromStackTrace(ex)))
                 .reason(reason)
                 .message(ex.getMessage())
                 .status(HttpStatus.CONFLICT.toString())
@@ -121,8 +98,9 @@ public class ErrorHandler {
     public ResponseEntity<ApiError> allHandler(final Throwable ex) {
         String reason = "Internal server error";
         LocalDateTime timestamp = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
-        log.error(reason + ex.getMessage());
+        log.error(reason + ex.getMessage(), ex);
         ApiError error = ApiError.builder()
+                .errors(Collections.singletonList(ExceptionParser.makeStringFromStackTrace(ex)))
                 .reason(reason)
                 .message(ex.getMessage())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.toString())

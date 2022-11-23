@@ -14,7 +14,7 @@ import ru.practicum.explorewithme.base.exception.UserNotFoundException;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.model.User;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.CategoryRepository;
@@ -48,10 +48,9 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     @Override
     public List<PrivateEventShortDto> findAllByInitiatorId(Long initiatorId, PaginationRequest paginationRequest) {
         findUserByIdOrThrow(initiatorId);
-        List<EventWithReqAndViews> events = eventRepository.findAllByInitiatorIdWithViews(initiatorId,
+        List<EventWithViews> events = eventRepository.findAllByInitiatorIdWithViews(initiatorId,
                 paginationRequest.makeOffsetBasedByFieldAsc("id"));
-        return events.stream().map(event -> PrivateEventShortDto.from(event.getEvent(),
-                        event.getConfirmedRequests(), event.getViews()))
+        return events.stream().map(event -> PrivateEventShortDto.from(event.getEvent(), event.getViews()))
                 .collect(Collectors.toList());
     }
 
@@ -59,7 +58,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     @Transactional
     public PrivateEventFullDto update(Long userId, NewEventDto newEventDto) {
         Long eventId = newEventDto.getEventId();
-        EventWithReqAndViews eventWithViews = findByIdWithViewsOrThrow(eventId);
+        EventWithViews eventWithViews = findByIdWithViewsOrThrow(eventId);
         Event event = eventWithViews.getEvent();
         findUserByIdOrThrow(userId);
         if (!event.getInitiator().getId().equals(userId)) {
@@ -70,7 +69,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                     "eventState = %s", event.getEventState()));
         }
         updateRequiredFields(event, newEventDto);
-        return PrivateEventFullDto.from(event, eventWithViews.getConfirmedRequests(), eventWithViews.getViews());
+        return PrivateEventFullDto.from(event, eventWithViews.getViews());
     }
 
     private void updateRequiredFields(Event event, NewEventDto newEventDto) {
@@ -111,26 +110,26 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         Event newEvent = NewEventDto.toEvent(newEventDto, category, initiator);
         newEvent.setCreatedOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         newEvent.setEventState(EventState.PENDING);
+        newEvent.setConfirmedRequests(0L);
         eventRepository.save(newEvent);
-        return PrivateEventFullDto.from(newEvent, 0L, 0L);
+        return PrivateEventFullDto.from(newEvent, 0L);
     }
 
     @Override
     public PrivateEventFullDto findById(Long userId, Long eventId) {
         findUserByIdOrThrow(userId);
-        EventWithReqAndViews eventWithViews = findByIdWithViewsOrThrow(eventId);
+        EventWithViews eventWithViews = findByIdWithViewsOrThrow(eventId);
         if (!eventWithViews.getEvent().getInitiator().getId().equals(userId)) {
             throw new ConditionsNotMetException(String.format("User with id = %d is not initiator", userId));
         }
-        return PrivateEventFullDto.from(eventWithViews.getEvent(), eventWithViews.getConfirmedRequests(),
-                eventWithViews.getViews());
+        return PrivateEventFullDto.from(eventWithViews.getEvent(), eventWithViews.getViews());
     }
 
     @Override
     @Transactional
     public PrivateEventFullDto cancel(Long userId, Long eventId) {
         findUserByIdOrThrow(userId);
-        EventWithReqAndViews eventWithViews = findByIdWithViewsOrThrow(eventId);
+        EventWithViews eventWithViews = findByIdWithViewsOrThrow(eventId);
         Event event = eventWithViews.getEvent();
         if (!event.getInitiator().getId().equals(userId)) {
             throw new ConditionsNotMetException(String.format("User with id = %d is not initiator", userId));
@@ -140,11 +139,10 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                     "eventState = %s", event.getEventState()));
         }
         event.setEventState(EventState.CANCELED);
-        return PrivateEventFullDto.from(event, eventWithViews.getConfirmedRequests(),
-                eventWithViews.getViews());
+        return PrivateEventFullDto.from(event, eventWithViews.getViews());
     }
 
-    private EventWithReqAndViews findByIdWithViewsOrThrow(Long eventId) {
+    private EventWithViews findByIdWithViewsOrThrow(Long eventId) {
         return eventRepository.findByIdWithViews(eventId)
                 .orElseThrow(() -> new EventNotFoundException(String.format("Event with id = %d " +
                         "is not found", eventId)));

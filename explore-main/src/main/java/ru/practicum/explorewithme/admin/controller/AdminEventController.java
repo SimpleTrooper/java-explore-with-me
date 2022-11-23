@@ -39,13 +39,14 @@ public class AdminEventController {
 
     /**
      * Получить события
-     * @param users список id инициаторов
-     * @param states список состояний
+     *
+     * @param users      список id инициаторов
+     * @param states     список состояний
      * @param categories список id категорий
      * @param rangeStart дата начала - от
-     * @param rangeEnd дата начала - до
-     * @param from вывести записи начиная с
-     * @param size количество записей
+     * @param rangeEnd   дата начала - до
+     * @param from       вывести записи начиная с
+     * @param size       количество записей
      * @return Список DTO полученных событий
      */
     @GetMapping
@@ -69,7 +70,8 @@ public class AdminEventController {
 
     /**
      * Обновить событие
-     * @param eventId id события
+     *
+     * @param eventId                 id события
      * @param adminUpdateEventRequest параметры для обновления
      * @return DTO обновленного события
      */
@@ -82,6 +84,7 @@ public class AdminEventController {
 
     /**
      * Опубликовать событие
+     *
      * @param eventId id события
      * @return DTO опубликованного события
      */
@@ -93,6 +96,7 @@ public class AdminEventController {
 
     /**
      * Отклонить событие
+     *
      * @param eventId id события
      * @return DTO отклоненного события
      */

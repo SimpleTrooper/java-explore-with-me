@@ -13,8 +13,9 @@ import java.util.List;
 public interface PublicEventService {
     /**
      * Получение событий с возможностью фильтрации
+     *
      * @param publicGetEventsRequest фильтрация
-     * @param paginationRequest пагинация
+     * @param paginationRequest      пагинация
      * @return Список коротких DTO событий
      */
     List<PublicEventShortDto> findAll(PublicGetEventsRequest publicGetEventsRequest,
@@ -22,6 +23,7 @@ public interface PublicEventService {
 
     /**
      * Получение события по id
+     *
      * @param eventId id события
      * @return Полный DTO события
      */

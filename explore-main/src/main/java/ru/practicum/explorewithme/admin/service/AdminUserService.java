@@ -11,7 +11,8 @@ import java.util.List;
 public interface AdminUserService {
     /**
      * Получение информации о пользователях
-     * @param ids список id пользователей, если присутствует - пагинация игнорируется
+     *
+     * @param ids               список id пользователей, если присутствует - пагинация игнорируется
      * @param paginationRequest пагинация
      * @return список DTO пользователей
      */
@@ -19,6 +20,7 @@ public interface AdminUserService {
 
     /**
      * Добавление нового пользователя
+     *
      * @param newUser DTO для добавления
      * @return DTO добавленного пользователя
      */
@@ -26,6 +28,7 @@ public interface AdminUserService {
 
     /**
      * Удаление пользователя
+     *
      * @param userId id удаляемого пользователя
      */
     void delete(Long userId);

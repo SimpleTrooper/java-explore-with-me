@@ -28,11 +28,12 @@ public class PublicCompilationController {
     }
 
     /**
-     *  Получение подборок событий
+     * Получение подборок событий
+     *
      * @param pinned показать закрепленные/не закрепленные подборки
      *               true = {"true", "on", "yes", "1"}, false = {"false", "off", "no", "0"}
-     * @param from пагинация - записи, начиная с from
-     * @param size пагинация - количество записей
+     * @param from   пагинация - записи, начиная с from
+     * @param size   пагинация - количество записей
      * @return Список найденных DTO подборок
      */
     @GetMapping
@@ -45,6 +46,7 @@ public class PublicCompilationController {
 
     /**
      * Получение подборки по её id
+     *
      * @param compilationId id подборки
      * @return DTO найденной подборки
      */

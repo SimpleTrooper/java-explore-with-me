@@ -64,11 +64,11 @@ public class PrivateEventFullDto {
         }
     }
 
-    public static PrivateEventFullDto from(Event event, Long confirmedRequests, Long views) {
+    public static PrivateEventFullDto from(Event event, Long views) {
         return PrivateEventFullDto.builder()
                 .annotation(event.getAnnotation())
                 .category(CategoryDto.from(event.getCategory()))
-                .confirmedRequests(confirmedRequests)
+                .confirmedRequests(event.getConfirmedRequests())
                 .createdOn(ExploreDateFormatter.format(event.getCreatedOn()))
                 .description(event.getDescription())
                 .eventDate(ExploreDateFormatter.format(event.getEventDate()))

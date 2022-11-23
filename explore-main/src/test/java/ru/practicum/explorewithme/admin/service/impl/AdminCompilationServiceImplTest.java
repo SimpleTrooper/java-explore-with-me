@@ -90,6 +90,7 @@ class AdminCompilationServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.CANCELED)
+                .confirmedRequests(1L)
                 .build();
         eventRepository.save(event1);
 
@@ -105,6 +106,7 @@ class AdminCompilationServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.PUBLISHED)
+                .confirmedRequests(0L)
                 .build();
         eventRepository.save(event2);
 

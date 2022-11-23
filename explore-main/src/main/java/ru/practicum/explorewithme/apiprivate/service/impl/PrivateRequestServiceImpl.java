@@ -1,6 +1,7 @@
 package ru.practicum.explorewithme.apiprivate.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.apiprivate.dto.ParticipationRequestDto;
 import ru.practicum.explorewithme.apiprivate.service.PrivateRequestService;
@@ -51,17 +52,18 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ParticipationRequestDto confirm(Long userId, Long eventId, Long requestId) {
         User user = findUserByIdOrThrow(userId);
         Event event = findEventByIdOrThrow(eventId);
         checkEventOwnership(user, event);
         Request request = findByIdOrThrow(requestId);
-        Long confirmedParticipantCount = requestRepository.findAllConfirmedRequests(eventId).orElse(0L);
+        long confirmedParticipantCount = requestRepository.findAllConfirmedRequests(eventId).orElse(0L);
         if (confirmedParticipantCount >= event.getParticipantLimit()) {
             throw new ConditionsNotMetException("Participant limit reached");
         }
         request.setRequestState(RequestState.CONFIRMED);
+        event.setConfirmedRequests(confirmedParticipantCount + 1);
         if (confirmedParticipantCount == event.getParticipantLimit() - 1) {
             List<Request> pendingRequests = requestRepository.findAllPendingRequestsForEvent(eventId);
             for (Request pendingRequest: pendingRequests) {
@@ -91,7 +93,7 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ParticipationRequestDto add(Long userId, Long eventId) {
         User user = findUserByIdOrThrow(userId);
         Event event = findEventByIdOrThrow(eventId);
@@ -111,6 +113,7 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
         RequestState requestState = RequestState.PENDING;
         if (!event.getRequestModeration()) {
             requestState = RequestState.CONFIRMED;
+            event.setConfirmedRequests(confirmedRequests + 1);
         }
         Request request = new Request(null, user, event, requestState,
                 LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
@@ -119,15 +122,17 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public ParticipationRequestDto cancel(Long userId, Long requestId) {
         findUserByIdOrThrow(userId);
         Request request = findByIdOrThrow(requestId);
+        Event event = request.getEvent();
         if (!userId.equals(request.getRequester().getId())) {
             throw new ConditionsNotMetException(String.format("User with id = %d is not " +
                     "requester for request with id = %d", userId, requestId));
         }
         request.setRequestState(RequestState.CANCELED);
+        event.setConfirmedRequests(requestRepository.findAllConfirmedRequests(event.getId()).orElse(0L));
         return ParticipationRequestDto.from(request);
     }
 

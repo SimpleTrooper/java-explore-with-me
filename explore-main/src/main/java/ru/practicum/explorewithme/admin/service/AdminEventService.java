@@ -13,6 +13,7 @@ import java.util.List;
 public interface AdminEventService {
     /**
      * Получить события
+     *
      * @param getEventsRequest запрос с фильтрацией событий
      * @return Список DTO полученных событий
      */
@@ -20,7 +21,8 @@ public interface AdminEventService {
 
     /**
      * Обновить событие
-     * @param eventId id события
+     *
+     * @param eventId                 id события
      * @param adminUpdateEventRequest параметры для обновления
      * @return DTO обновленного события
      */
@@ -28,6 +30,7 @@ public interface AdminEventService {
 
     /**
      * Опубликовать событие
+     *
      * @param eventId id события
      * @return DTO опубликованного события
      */
@@ -35,6 +38,7 @@ public interface AdminEventService {
 
     /**
      * Отклонить событие
+     *
      * @param eventId id события
      * @return DTO отклоненного события
      */

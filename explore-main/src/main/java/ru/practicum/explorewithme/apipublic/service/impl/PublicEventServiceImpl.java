@@ -11,7 +11,7 @@ import ru.practicum.explorewithme.apipublic.service.PublicEventService;
 import ru.practicum.explorewithme.base.exception.ConditionsNotMetException;
 import ru.practicum.explorewithme.base.exception.EventNotFoundException;
 import ru.practicum.explorewithme.base.model.EventState;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.model.QEvent;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.EventRepository;
@@ -64,56 +64,41 @@ public class PublicEventServiceImpl implements PublicEventService {
             booleanBuilder.and(QEvent.event.eventDate.loe(publicGetEventsRequest.getRangeEnd()));
         }
 
-        List<EventWithReqAndViews> eventsWithReqAndViews = new ArrayList<>();
-
         if (publicGetEventsRequest.getOnlyAvailable()) {
-            if (publicGetEventsRequest.getSort() != null) {
-                switch (publicGetEventsRequest.getSort()) {
-                    case EVENT_DATE:
-                        eventsWithReqAndViews = eventRepository.findAllAvailableWithViews(booleanBuilder,
-                                paginationRequest.makeOffsetBasedByFieldDesc("eventDate"));
-                        break;
-                    case VIEWS:
-                        eventsWithReqAndViews = eventRepository.findAllAvailableSortedByViews(booleanBuilder,
-                                paginationRequest.makeOffsetBased());
-                }
-            } else {
-                eventsWithReqAndViews = eventRepository.findAllAvailableWithViews(booleanBuilder,
-                        paginationRequest.makeOffsetBased());
-            }
-        } else {
-            if (publicGetEventsRequest.getSort() != null) {
-                switch (publicGetEventsRequest.getSort()) {
-                    case EVENT_DATE:
-                        eventsWithReqAndViews = eventRepository.findAllWithViews(booleanBuilder,
-                                paginationRequest.makeOffsetBasedByFieldDesc("eventDate"));
-                        break;
-                    case VIEWS:
-                        eventsWithReqAndViews = eventRepository.findAllSortedByViews(booleanBuilder,
-                                paginationRequest.makeOffsetBased());
-                }
-            } else {
-                eventsWithReqAndViews = eventRepository.findAllWithViews(booleanBuilder,
-                        paginationRequest.makeOffsetBased());
-            }
+            booleanBuilder.and(QEvent.event.confirmedRequests.lt(QEvent.event.participantLimit));
         }
 
-        return eventsWithReqAndViews.stream()
-                .map(event -> PublicEventShortDto.from(event.getEvent(),
-                        event.getConfirmedRequests(), event.getViews()))
+        List<EventWithViews> eventsWithViews = new ArrayList<>();
+        if (publicGetEventsRequest.getSort() != null) {
+            switch (publicGetEventsRequest.getSort()) {
+                case EVENT_DATE:
+                    eventsWithViews = eventRepository.findAllWithViews(booleanBuilder,
+                            paginationRequest.makeOffsetBasedByFieldDesc("eventDate"));
+                    break;
+                case VIEWS:
+                    eventsWithViews = eventRepository.findAllSortedByViews(booleanBuilder,
+                            paginationRequest.makeOffsetBased());
+            }
+        } else {
+            eventsWithViews = eventRepository.findAllWithViews(booleanBuilder,
+                    paginationRequest.makeOffsetBased());
+        }
+
+        return eventsWithViews.stream()
+                .map(event -> PublicEventShortDto.from(event.getEvent(), event.getViews()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public PublicEventFullDto findById(Long eventId) {
-        EventWithReqAndViews event = findByIdOrThrow(eventId);
+        EventWithViews event = findByIdOrThrow(eventId);
         if (!event.getEvent().getEventState().equals(EventState.PUBLISHED)) {
             throw new ConditionsNotMetException("Event state is not PUBLISHED");
         }
-        return PublicEventFullDto.from(event.getEvent(), event.getConfirmedRequests(), event.getViews());
+        return PublicEventFullDto.from(event.getEvent(), event.getViews());
     }
 
-    private EventWithReqAndViews findByIdOrThrow(Long eventId) {
+    private EventWithViews findByIdOrThrow(Long eventId) {
         return eventRepository.findByIdWithViews(eventId)
                 .orElseThrow(() -> new EventNotFoundException(String.format("Event with id = %d " +
                         "is not found", eventId)));

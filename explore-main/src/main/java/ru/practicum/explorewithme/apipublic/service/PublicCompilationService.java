@@ -11,7 +11,8 @@ import java.util.List;
 public interface PublicCompilationService {
     /**
      * Получение подборок событий
-     * @param pinned получить только закрепленные/не закрепленные подборки
+     *
+     * @param pinned            получить только закрепленные/не закрепленные подборки
      * @param paginationRequest запрос на пагинацию
      * @return Список DTO подборок
      */
@@ -19,6 +20,7 @@ public interface PublicCompilationService {
 
     /**
      * Получение подборки по id
+     *
      * @param compilationId id подборки
      * @return DTO полученной подборки
      */

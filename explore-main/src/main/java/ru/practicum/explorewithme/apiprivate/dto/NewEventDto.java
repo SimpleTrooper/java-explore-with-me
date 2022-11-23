@@ -30,22 +30,31 @@ import java.time.LocalDateTime;
 public class NewEventDto {
     @NotBlank(groups = OnCreate.class)
     private String annotation;
+
     @NotNull
     private Long category;
+
     @NotBlank(groups = OnCreate.class)
     private String description;
+
     @NotNull(groups = OnCreate.class)
     @EventDateCorrect
-    @JsonFormat (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
+
     @NotNull(groups = OnCreate.class)
     private Location location;
+
     private Boolean paid;
+
     private Integer participantLimit;
+
     @Null(groups = OnUpdate.class)
     private Boolean requestModeration;
+
     @NotBlank(groups = OnCreate.class)
     private String title;
+
     @Null(groups = OnCreate.class)
     @NotNull(groups = OnUpdate.class)
     private Long eventId;

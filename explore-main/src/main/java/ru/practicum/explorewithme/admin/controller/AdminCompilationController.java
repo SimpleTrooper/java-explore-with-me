@@ -31,6 +31,7 @@ public class AdminCompilationController {
 
     /**
      * Добавление новой подборки
+     *
      * @param newCompilationDto DTO новой подборки
      * @return DTO с информацией о новой подборке
      */
@@ -42,6 +43,7 @@ public class AdminCompilationController {
 
     /**
      * Удаление подборки
+     *
      * @param compilationId id удаляемой подборки
      */
     @DeleteMapping("/{compilationId}")
@@ -52,8 +54,9 @@ public class AdminCompilationController {
 
     /**
      * Удаление события из подборки
+     *
      * @param compilationId id подборки
-     * @param eventId id события
+     * @param eventId       id события
      */
     @DeleteMapping("/{compilationId}/events/{eventId}")
     public void deleteEventFromCompilation(@PathVariable Long compilationId,
@@ -65,8 +68,9 @@ public class AdminCompilationController {
 
     /**
      * Добавление события в подборку
+     *
      * @param compilationId id подборки
-     * @param eventId id события
+     * @param eventId       id события
      */
     @PatchMapping("/{compilationId}/events/{eventId}")
     public void addEventToCompilation(@PathVariable Long compilationId,
@@ -78,6 +82,7 @@ public class AdminCompilationController {
 
     /**
      * Открепление подборки
+     *
      * @param compilationId id подборки
      */
     @DeleteMapping("/{compilationId}/pin")
@@ -88,6 +93,7 @@ public class AdminCompilationController {
 
     /**
      * Прикрепление подборки
+     *
      * @param compilationId id подборки
      */
     @PatchMapping("/{compilationId}/pin")

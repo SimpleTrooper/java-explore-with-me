@@ -30,6 +30,7 @@ public class PrivateRequestController {
 
     /**
      * Получение информации о заявках текущего пользователя на участие в чужих событиях
+     *
      * @param userId id пользователя
      * @return Список DTO запросов на участие
      */
@@ -41,13 +42,14 @@ public class PrivateRequestController {
 
     /**
      * Добавление запроса от текущего пользователя на участие в событии
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return DTO запроса
      */
     @PostMapping
     public ParticipationRequestDto add(@PathVariable Long userId,
-                                        @RequestParam Long eventId) {
+                                       @RequestParam Long eventId) {
         log.info("Private request to add new participation request from user with id = {} for event with id = {}",
                 userId, eventId);
         return privateRequestService.add(userId, eventId);
@@ -55,7 +57,8 @@ public class PrivateRequestController {
 
     /**
      * Отмена своего запроса на участие в событии
-     * @param userId id пользователя
+     *
+     * @param userId    id пользователя
      * @param requestId id запроса
      * @return DTO отмененного запроса
      */

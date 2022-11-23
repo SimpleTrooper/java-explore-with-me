@@ -10,7 +10,7 @@ import ru.practicum.explorewithme.base.exception.CompilationNotFoundException;
 import ru.practicum.explorewithme.base.exception.EventNotFoundException;
 import ru.practicum.explorewithme.base.model.Compilation;
 import ru.practicum.explorewithme.base.model.Event;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.repository.CompilationRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
 
@@ -39,14 +39,14 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
     public AdminCompilationDto add(NewCompilationDto newCompilationDto) {
         Compilation newCompilation = NewCompilationDto.toCompilation(newCompilationDto);
         List<Long> eventIds = newCompilationDto.getEvents();
-        List<EventWithReqAndViews> compilationEventsWithViews = new ArrayList<>();
+        List<EventWithViews> compilationEventsWithViews = new ArrayList<>();
         if (eventIds != null) {
             compilationEventsWithViews = eventRepository.findAllByIdInWithViews(eventIds);
             if (compilationEventsWithViews.size() != eventIds.size()) {
                 throw new EventNotFoundException("Event in compilation is not found");
             }
             List<Event> compilationEvents = compilationEventsWithViews.stream()
-                    .map(EventWithReqAndViews::getEvent)
+                    .map(EventWithViews::getEvent)
                     .collect(Collectors.toList());
             newCompilation.setEvents(compilationEvents);
         }

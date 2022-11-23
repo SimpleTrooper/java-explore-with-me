@@ -44,6 +44,10 @@ public class PrivateEventController {
 
     /**
      * Получение событий, добавленных текущим пользователем
+     *
+     * @param userId id пользователя
+     * @param from   пагинация - начиная с
+     * @param size   количество записей
      * @return список коротких DTO событий
      */
     @GetMapping
@@ -56,7 +60,8 @@ public class PrivateEventController {
 
     /**
      * Обновить событие
-     * @param userId id пользователя-инициатора
+     *
+     * @param userId      id пользователя-инициатора
      * @param newEventDto DTO обновления
      * @return полное DTO обновленного события
      */
@@ -70,8 +75,9 @@ public class PrivateEventController {
     }
 
     /**
-     * добавить событие
-     * @param userId id пользователя-инициатора
+     * Добавить событие
+     *
+     * @param userId      id пользователя-инициатора
      * @param newEventDto DTO нового события
      * @return полное DTO нового события
      */
@@ -85,7 +91,8 @@ public class PrivateEventController {
 
     /**
      * Получение полной информации о событии, добавленном текущим пользователем
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return Полное DTO события
      */
@@ -98,7 +105,8 @@ public class PrivateEventController {
 
     /**
      * Отмена события, добавленного текущим пользователем
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return Полное DTO события
      */
@@ -111,7 +119,8 @@ public class PrivateEventController {
 
     /**
      * Получение информации о запросах на участие в событии текущего пользователя
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return Список DTO запросов
      */
@@ -125,8 +134,9 @@ public class PrivateEventController {
 
     /**
      * Подтверждение чужой заявки на участие в событии текущего пользователя
-     * @param userId id пользователя
-     * @param eventId id события
+     *
+     * @param userId    id пользователя
+     * @param eventId   id события
      * @param requestId id запроса
      * @return DTO подтвержденного запроса
      */
@@ -141,15 +151,16 @@ public class PrivateEventController {
 
     /**
      * Отклонение чужой заявки на участие в событии текущего пользователя
-     * @param userId id пользователя
-     * @param eventId id события
+     *
+     * @param userId    id пользователя
+     * @param eventId   id события
      * @param requestId id запроса
      * @return DTO отклоненного запроса
      */
     @PatchMapping("/{eventId}/requests/{requestId}/reject")
     public ParticipationRequestDto rejectRequest(@PathVariable Long userId,
-                                                  @PathVariable Long eventId,
-                                                  @PathVariable Long requestId) {
+                                                 @PathVariable Long eventId,
+                                                 @PathVariable Long requestId) {
         log.info("Private request to reject participation request with id = {} for event with id = {}",
                 requestId, eventId);
         return privateRequestService.reject(userId, eventId, requestId);

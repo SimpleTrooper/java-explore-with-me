@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
  * Кастомная пагинация, получение первого элемента по смещению from, вместо номера страницы в PageRequest
  */
 public class OffsetBasedPageRequest extends PageRequest {
-    long offset;
+    private final long offset;
 
     protected OffsetBasedPageRequest(int from, int size, Sort sort) {
         super(from / size, size, sort);

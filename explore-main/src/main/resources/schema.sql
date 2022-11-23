@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS events (
     created TIMESTAMP NOT NULL,
     event_state VARCHAR(30) NOT NULL,
     published TIMESTAMP,
+    confirmed_requests BIGINT NOT NULL,
     CONSTRAINT pk_events PRIMARY KEY(event_id),
     CONSTRAINT fk_events_categories FOREIGN KEY(category_id) REFERENCES categories(category_id),
     CONSTRAINT fk_events_users FOREIGN KEY(user_id) REFERENCES users(user_id)

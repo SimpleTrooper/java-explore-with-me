@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.base.util;
+package ru.practicum.explorestat.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -10,6 +10,7 @@ public class ExceptionParser {
 
     /**
      * Получение строки из StackTrace
+     *
      * @param exception исключение
      * @return строка из StackTrace
      */

@@ -92,6 +92,7 @@ class AdminEventServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.CANCELED)
+                .confirmedRequests(0L)
                 .build();
         event2 = Event.builder()
                 .title("Test event 2")
@@ -105,6 +106,7 @@ class AdminEventServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.CANCELED)
+                .confirmedRequests(0L)
                 .build();
         event3 = Event.builder()
                 .title("Test event 3")
@@ -118,6 +120,7 @@ class AdminEventServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.PENDING)
+                .confirmedRequests(0L)
                 .build();
         eventRepository.save(event1);
         eventRepository.save(event2);

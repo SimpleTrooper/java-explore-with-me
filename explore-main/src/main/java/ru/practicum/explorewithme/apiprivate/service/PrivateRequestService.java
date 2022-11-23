@@ -10,7 +10,8 @@ import java.util.List;
 public interface PrivateRequestService {
     /**
      * Получение информации о запросах на участие в событии текущего пользователя
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return Список DTO запросов
      */
@@ -18,8 +19,9 @@ public interface PrivateRequestService {
 
     /**
      * Подтверждение чужого запроса на участие в событии текущего пользователя
-     * @param userId id пользователя
-     * @param eventId id события
+     *
+     * @param userId    id пользователя
+     * @param eventId   id события
      * @param requestId id заявки на участие
      * @return DTO подтвержденного запроса
      */
@@ -27,8 +29,9 @@ public interface PrivateRequestService {
 
     /**
      * Отклонение чужого запроса на участие в событии текущего пользователя
-     * @param userId id пользователя
-     * @param eventId id события
+     *
+     * @param userId    id пользователя
+     * @param eventId   id события
      * @param requestId id заявки на участие
      * @return DTO подтвержденного запроса
      */
@@ -36,6 +39,7 @@ public interface PrivateRequestService {
 
     /**
      * Получение информации о запросах текущего пользователя на участие в чужих событиях
+     *
      * @param userId id пользователя
      * @return Список DTO запросов
      */
@@ -43,7 +47,8 @@ public interface PrivateRequestService {
 
     /**
      * Добавление запроса от текущего пользователя на участие в событии
-     * @param userId id пользователя
+     *
+     * @param userId  id пользователя
      * @param eventId id события
      * @return DTO запроса
      */
@@ -51,7 +56,8 @@ public interface PrivateRequestService {
 
     /**
      * Отмена своего запроса на участие в событии
-     * @param userId id пользователя
+     *
+     * @param userId    id пользователя
      * @param requestId id запроса
      * @return DTO запроса
      */

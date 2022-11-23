@@ -34,15 +34,19 @@ public class Request {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "request_id")
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User requester;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
     private Event event;
+
     @Column(name = "request_state")
     @Enumerated(value = EnumType.STRING)
     private RequestState requestState;
+
     @Column(name = "created")
     private LocalDateTime createdOn;
 }

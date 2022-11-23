@@ -38,35 +38,51 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
     private Long id;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "annotation")
     private String annotation;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "event_date")
     private LocalDateTime eventDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User initiator;
+
     @Embedded
     private Location location;
     @Column(name = "paid")
     private Boolean paid;
+
     @Column(name = "participant_limit")
     private Integer participantLimit;
+
     @Column(name = "request_moderation")
     private Boolean requestModeration;
+
     @Column(name = "created")
     private LocalDateTime createdOn;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "event_state")
     private EventState eventState;
+
     @Column(name = "published")
     private LocalDateTime publishedOn;
+
     @ManyToMany(mappedBy = "events")
     private List<Compilation> compilations = new ArrayList<>();
+
+    @Column(name = "confirmed_requests")
+    private Long confirmedRequests;
 }

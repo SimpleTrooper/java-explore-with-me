@@ -38,7 +38,8 @@ public class AdminUserController {
 
     /**
      * Получение информации о пользователях
-     * @param ids список id пользователей, если присутствует - пагинация игнорируется
+     *
+     * @param ids  список id пользователей, если присутствует - пагинация игнорируется
      * @param from пагинация - начиная с
      * @param size пагинация - количество записей
      * @return список DTO пользователей
@@ -53,6 +54,7 @@ public class AdminUserController {
 
     /**
      * Добавление нового пользователя
+     *
      * @param userDto DTO для добавления
      * @return DTO добавленного пользователя
      */
@@ -65,6 +67,7 @@ public class AdminUserController {
 
     /**
      * Удаление пользователя
+     *
      * @param userId id удаляемого пользователя
      */
     @DeleteMapping("/{userId}")

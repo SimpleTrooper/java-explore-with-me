@@ -141,7 +141,7 @@ class PrivateEventControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.reason", is(exceptionReason)))
-                .andExpect(jsonPath("$.errors[0]", is(errorMessage)));
+                .andExpect(jsonPath("$.message", is(errorMessage)));
     }
 
     @AfterEach

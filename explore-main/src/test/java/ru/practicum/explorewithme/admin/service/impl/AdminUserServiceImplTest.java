@@ -54,7 +54,11 @@ class AdminUserServiceImplTest {
 
         List<UserDto> actual = adminUserService.findAll(ids, new PaginationRequest(0, 10));
 
-        assertThat(actual, equalTo(expected));
+        assertThat(actual, notNullValue());
+        assertThat(actual.size(), equalTo(expected.size()));
+        assertThat(actual.get(0).getId(), equalTo(expected.get(0).getId()));
+        assertThat(actual.get(0).getName(), equalTo(expected.get(0).getName()));
+        assertThat(actual.get(0).getEmail(), equalTo(expected.get(0).getEmail()));
     }
 
     /**
@@ -66,7 +70,14 @@ class AdminUserServiceImplTest {
 
         List<UserDto> actual = adminUserService.findAll(null, new PaginationRequest(0, 10));
 
-        assertThat(actual, equalTo(expected));
+        assertThat(actual, notNullValue());
+        assertThat(actual.size(), equalTo(expected.size()));
+        assertThat(actual.get(0).getId(), equalTo(expected.get(0).getId()));
+        assertThat(actual.get(0).getName(), equalTo(expected.get(0).getName()));
+        assertThat(actual.get(0).getEmail(), equalTo(expected.get(0).getEmail()));
+        assertThat(actual.get(1).getId(), equalTo(expected.get(1).getId()));
+        assertThat(actual.get(1).getName(), equalTo(expected.get(1).getName()));
+        assertThat(actual.get(1).getEmail(), equalTo(expected.get(1).getEmail()));
     }
 
     /**

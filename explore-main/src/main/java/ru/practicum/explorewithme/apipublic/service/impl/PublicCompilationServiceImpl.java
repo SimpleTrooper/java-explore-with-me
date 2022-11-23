@@ -6,7 +6,7 @@ import ru.practicum.explorewithme.apipublic.dto.PublicCompilationDto;
 import ru.practicum.explorewithme.apipublic.service.PublicCompilationService;
 import ru.practicum.explorewithme.base.exception.CompilationNotFoundException;
 import ru.practicum.explorewithme.base.model.Compilation;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.CompilationRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
@@ -46,7 +46,7 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
         Set<Long> eventIds = new HashSet<>();
         compilations.forEach(compilation -> compilation.getEvents().forEach(event -> eventIds.add(event.getId())));
 
-        Map<Long, EventWithReqAndViews> eventsWithReqAndViews = eventRepository.findAllByIdInWithViews(eventIds)
+        Map<Long, EventWithViews> eventsWithReqAndViews = eventRepository.findAllByIdInWithViews(eventIds)
                 .stream().collect(Collectors.toMap(eventWithReqAndViews -> eventWithReqAndViews.getEvent().getId(),
                         eventWithReqAndViews -> eventWithReqAndViews));
 
@@ -67,7 +67,7 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
         List<Long> eventIds = new ArrayList<>();
         compilation.getEvents().forEach(event -> eventIds.add(event.getId()));
 
-        List<EventWithReqAndViews> eventsWithReqAndViews = eventRepository.findAllByIdInWithViews(eventIds);
+        List<EventWithViews> eventsWithReqAndViews = eventRepository.findAllByIdInWithViews(eventIds);
 
         return PublicCompilationDto.from(compilation, eventsWithReqAndViews);
     }

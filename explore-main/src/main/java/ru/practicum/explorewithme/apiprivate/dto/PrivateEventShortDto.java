@@ -55,11 +55,11 @@ public class PrivateEventShortDto {
         }
     }
 
-    public static PrivateEventShortDto from(Event event, Long confirmedRequests, Long views) {
+    public static PrivateEventShortDto from(Event event, Long views) {
         return PrivateEventShortDto.builder()
                 .annotation(event.getAnnotation())
                 .category(CategoryDto.from(event.getCategory()))
-                .confirmedRequests(confirmedRequests)
+                .confirmedRequests(event.getConfirmedRequests())
                 .eventDate(ExploreDateFormatter.format(event.getEventDate()))
                 .id(event.getId())
                 .initiator(UserShortDto.from(event.getInitiator()))

@@ -36,6 +36,7 @@ public class AdminCategoryController {
 
     /**
      * Изменение категории
+     *
      * @param newCategoryDto DTO для изменения
      * @return DTO измененной категории
      */
@@ -48,6 +49,7 @@ public class AdminCategoryController {
 
     /**
      * Добавление новой категории
+     *
      * @param newCategoryDto DTO для добавления
      * @return DTO добавленной категории
      */
@@ -60,6 +62,7 @@ public class AdminCategoryController {
 
     /**
      * Удаление категории
+     *
      * @param categoryId id удаляемой категории
      */
     @DeleteMapping("/{categoryId}")

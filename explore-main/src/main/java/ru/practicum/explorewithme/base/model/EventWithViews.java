@@ -6,14 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Событие с подтвержденными запросами и просмотрами
+ * Событие с количеством просмотров
  */
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventWithReqAndViews {
+public class EventWithViews {
     private Event event;
-    private Long confirmedRequests;
     private Long views;
 }

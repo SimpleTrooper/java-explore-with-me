@@ -23,7 +23,7 @@ public class ParticipationRequestDto {
     private RequestState status;
 
     public static ParticipationRequestDto from(Request request) {
-        return new ParticipationRequestDto(ExploreDateFormatter.format(request.getCreatedOn()), request.getEvent().getId(),
-                request.getId(), request.getRequester().getId(), request.getRequestState());
+        return new ParticipationRequestDto(ExploreDateFormatter.format(request.getCreatedOn()),
+                request.getEvent().getId(), request.getId(), request.getRequester().getId(), request.getRequestState());
     }
 }

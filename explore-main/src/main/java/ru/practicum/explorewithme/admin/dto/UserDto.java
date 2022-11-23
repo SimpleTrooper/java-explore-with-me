@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.admin.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,14 +20,15 @@ import javax.validation.constraints.Null;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class UserDto {
     @NotBlank(groups = OnCreate.class)
     @Email
     private String email;
+
     @Null(groups = OnCreate.class)
     @NotNull(groups = OnUpdate.class)
     private Long id;
+
     @NotBlank(groups = OnCreate.class)
     private String name;
 

@@ -49,7 +49,6 @@ class PrivateRequestServiceImplTest {
     Event event1;
     Event event2;
     Request request1;
-    Request request2;
 
     @BeforeEach
     void init() {
@@ -73,6 +72,7 @@ class PrivateRequestServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.CANCELED)
+                .confirmedRequests(0L)
                 .build();
         event2 = Event.builder()
                 .title("Test event 2")
@@ -86,6 +86,7 @@ class PrivateRequestServiceImplTest {
                 .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .requestModeration(false)
                 .eventState(EventState.PUBLISHED)
+                .confirmedRequests(0L)
                 .build();
         eventRepository.save(event1);
         eventRepository.save(event2);
@@ -170,7 +171,7 @@ class PrivateRequestServiceImplTest {
     }
 
     /**
-     * Стандартное поведение shouldAdd
+     * Стандартное поведение add
      */
     @Test
     void shouldAdd() {

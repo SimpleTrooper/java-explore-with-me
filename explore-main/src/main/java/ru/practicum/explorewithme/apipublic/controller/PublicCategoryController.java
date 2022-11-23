@@ -29,6 +29,7 @@ public class PublicCategoryController {
 
     /**
      * Получение категорий
+     *
      * @param from пагинация - от
      * @param size пагинация - размер
      * @return Список DTO категорий
@@ -42,6 +43,7 @@ public class PublicCategoryController {
 
     /**
      * Получение категории по id
+     *
      * @param categoryId id категории
      * @return DTO категории
      */

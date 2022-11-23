@@ -15,7 +15,7 @@ import ru.practicum.explorewithme.base.exception.EventNotFoundException;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
-import ru.practicum.explorewithme.base.model.EventWithReqAndViews;
+import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.model.QEvent;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.CategoryRepository;
@@ -61,20 +61,19 @@ public class AdminEventServiceImpl implements AdminEventService {
         if (getEventsRequest.getRangeEnd() != null) {
             booleanBuilder.and(QEvent.event.eventDate.loe(getEventsRequest.getRangeEnd()));
         }
-        List<EventWithReqAndViews> events = eventRepository.findAllWithViews(booleanBuilder, pageable);
+        List<EventWithViews> events = eventRepository.findAllWithViews(booleanBuilder, pageable);
 
-        return events.stream().map(e -> AdminEventFullDto.from(e.getEvent(), e.getConfirmedRequests(), e.getViews()))
+        return events.stream().map(e -> AdminEventFullDto.from(e.getEvent(), e.getViews()))
                 .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public AdminEventFullDto update(Long eventId, AdminUpdateEventRequest adminUpdateEventRequest) {
-        EventWithReqAndViews updatedEvent = findByIdWithViewsOrThrow(eventId);
+        EventWithViews updatedEvent = findByIdWithViewsOrThrow(eventId);
         updateRequiredFields(updatedEvent.getEvent(), adminUpdateEventRequest);
 
-        return AdminEventFullDto.from(updatedEvent.getEvent(), updatedEvent.getConfirmedRequests(),
-                updatedEvent.getViews());
+        return AdminEventFullDto.from(updatedEvent.getEvent(), updatedEvent.getViews());
     }
 
     private void updateRequiredFields(Event event, AdminUpdateEventRequest adminUpdateEventRequest) {
@@ -110,7 +109,7 @@ public class AdminEventServiceImpl implements AdminEventService {
     @Override
     @Transactional
     public AdminEventFullDto publish(Long eventId) {
-        EventWithReqAndViews eventWithViews = findByIdWithViewsOrThrow(eventId);
+        EventWithViews eventWithViews = findByIdWithViewsOrThrow(eventId);
         Event event = eventWithViews.getEvent();
 
         LocalDateTime publishedOn = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
@@ -127,13 +126,13 @@ public class AdminEventServiceImpl implements AdminEventService {
         event.setPublishedOn(publishedOn);
         event.setEventState(EventState.PUBLISHED);
 
-        return AdminEventFullDto.from(event, eventWithViews.getConfirmedRequests(), eventWithViews.getViews());
+        return AdminEventFullDto.from(event, eventWithViews.getViews());
     }
 
     @Override
     @Transactional
     public AdminEventFullDto reject(Long eventId) {
-        EventWithReqAndViews eventWithViews = findByIdWithViewsOrThrow(eventId);
+        EventWithViews eventWithViews = findByIdWithViewsOrThrow(eventId);
         Event event = eventWithViews.getEvent();
 
         if (event.getEventState().equals(EventState.PUBLISHED)) {
@@ -143,10 +142,10 @@ public class AdminEventServiceImpl implements AdminEventService {
 
         event.setEventState(EventState.CANCELED);
 
-        return AdminEventFullDto.from(event, eventWithViews.getConfirmedRequests(), eventWithViews.getViews());
+        return AdminEventFullDto.from(event, eventWithViews.getViews());
     }
 
-    private EventWithReqAndViews findByIdWithViewsOrThrow(Long eventId) {
+    private EventWithViews findByIdWithViewsOrThrow(Long eventId) {
         return eventRepository.findByIdWithViews(eventId)
                 .orElseThrow(() -> new EventNotFoundException(String.format("Event with id = %d " +
                         "is not found", eventId)));

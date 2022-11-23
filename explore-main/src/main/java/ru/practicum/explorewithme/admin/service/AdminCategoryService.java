@@ -8,6 +8,7 @@ import ru.practicum.explorewithme.admin.dto.NewCategoryDto;
 public interface AdminCategoryService {
     /**
      * Изменение категории
+     *
      * @param newCategoryDto DTO для изменения
      * @return DTO измененной категории
      */
@@ -15,6 +16,7 @@ public interface AdminCategoryService {
 
     /**
      * Добавление новой категории
+     *
      * @param newCategoryDto DTO для добавления
      * @return DTO добавленной категории
      */
@@ -22,6 +24,7 @@ public interface AdminCategoryService {
 
     /**
      * Удаление категории
+     *
      * @param categoryId id удаляемой категории
      */
     void delete(Long categoryId);
