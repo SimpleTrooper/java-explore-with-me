@@ -28,6 +28,9 @@ public class ExploreDateFormatter {
         if (localDateTime == null) {
             return null;
         }
+        if (dateTimeFormatter == null) {
+            dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        }
         return localDateTime.format(dateTimeFormatter);
     }
 
