@@ -2,7 +2,7 @@ package ru.practicum.exploreclient.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.exploreclient.FeignClientForStats;
 import ru.practicum.exploreclient.dto.EndpointHit;
 import ru.practicum.exploreclient.dto.StatsDto;
@@ -21,13 +21,13 @@ import java.util.stream.Collectors;
  * Реализация клиента для обмена данными между микросервисами
  */
 @Service
-public class ExploreClientImpl implements ExploreClient {
+public class ExploreClientForStatsImpl implements ExploreClientForStats {
     private static final int daysPeriod = 30;
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final FeignClientForStats feignClientForStats;
 
     @Autowired
-    public ExploreClientImpl(FeignClientForStats feignClientForStats) {
+    public ExploreClientForStatsImpl(FeignClientForStats feignClientForStats) {
         this.feignClientForStats = feignClientForStats;
     }
 

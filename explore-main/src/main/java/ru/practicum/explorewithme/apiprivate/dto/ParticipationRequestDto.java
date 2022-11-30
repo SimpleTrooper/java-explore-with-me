@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.explorewithme.base.model.Request;
 import ru.practicum.explorewithme.base.model.RequestState;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 /**
  * DTO запроса на участие в событии

@@ -9,7 +9,7 @@ import lombok.Setter;
 import ru.practicum.explorewithme.apiprivate.validation.EventDateCorrect;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
-import ru.practicum.explorewithme.base.model.Location;
+import ru.practicum.explorewithme.base.model.LocationCoordinates;
 import ru.practicum.explorewithme.base.model.User;
 import ru.practicum.explorewithme.base.validation.groups.OnCreate;
 import ru.practicum.explorewithme.base.validation.groups.OnUpdate;
@@ -43,7 +43,7 @@ public class NewEventDto {
     private LocalDateTime eventDate;
 
     @NotNull(groups = OnCreate.class)
-    private Location location;
+    private LocationCoordinates location;
 
     private Boolean paid;
 
@@ -65,7 +65,7 @@ public class NewEventDto {
                 .category(category)
                 .description(newEventDto.description)
                 .eventDate(newEventDto.eventDate)
-                .location(newEventDto.location)
+                .locationCoordinates(newEventDto.location)
                 .paid(newEventDto.paid)
                 .participantLimit(newEventDto.participantLimit)
                 .requestModeration(newEventDto.requestModeration)

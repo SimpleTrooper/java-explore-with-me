@@ -21,13 +21,18 @@
 		<java.version>11</java.version>
 		<querydsl.version>5.0.0</querydsl.version>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<org.testcontainers-postgres.version>1.17.6</org.testcontainers-postgres.version>
+		<explore-client.version>0.0.1-SNAPSHOT</explore-client.version>
+		<explore-util.version>0.0.1-SNAPSHOT</explore-util.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
 		<module>explore-main</module>
 		<module>explore-stat</module>
+		<module>explore-geocoding</module>
         <module>explore-client</module>
+        <module>explore-util</module>
     </modules>
 
 	<dependencyManagement>
@@ -53,7 +58,10 @@
 							<spring.profiles.active>test</spring.profiles.active>
 						</systemPropertyVariables>
 						<environmentVariables>
-							<EXPLORE_REMOTE_SERVICE_URL>http://localhost:9090</EXPLORE_REMOTE_SERVICE_URL>
+							<EXPLORE_STATS_SERVICE_URL>http://localhost:9090</EXPLORE_STATS_SERVICE_URL>
+							<EXPLORE_GEOCODE_SERVICE_URL>http://localhost:9191</EXPLORE_GEOCODE_SERVICE_URL>
+							<GRAPHHOPPER_URL>https://graphhopper.com/api/1</GRAPHHOPPER_URL>
+							<GRAPHHOPPER_API_KEY>Dummy-key</GRAPHHOPPER_API_KEY>>
 						</environmentVariables>
 					</configuration>
 				</plugin>

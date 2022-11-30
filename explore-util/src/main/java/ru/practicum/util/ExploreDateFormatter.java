@@ -1,6 +1,7 @@
-package ru.practicum.explorestat.util;
+package ru.practicum.util;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -10,12 +11,17 @@ import java.time.format.DateTimeFormatter;
  * Утилитарный класс для форматирования даты
  */
 @Component
+@PropertySource(value = "classpath:util.properties")
 public class ExploreDateFormatter {
     private static DateTimeFormatter dateTimeFormatter;
 
     @Value("${spring.mvc.format.date-time}")
     public void setDateTimeFormatter(String pattern) {
-        dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        if (pattern == null) {
+            dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME;
+        } else {
+            dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        }
     }
 
     public static String format(LocalDateTime localDateTime) {

@@ -8,9 +8,9 @@ import lombok.Setter;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
-import ru.practicum.explorewithme.base.model.Location;
+import ru.practicum.explorewithme.base.model.LocationCoordinates;
 import ru.practicum.explorewithme.base.model.User;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 /**
  * Полное DTO события - private API
@@ -29,7 +29,7 @@ public class PrivateEventFullDto {
     private String eventDate;
     private Long id;
     private UserShortDto initiator;
-    private Location location;
+    private LocationCoordinates location;
     private Boolean paid;
     private Integer participantLimit;
     private String publishedOn;
@@ -74,7 +74,7 @@ public class PrivateEventFullDto {
                 .eventDate(ExploreDateFormatter.format(event.getEventDate()))
                 .id(event.getId())
                 .initiator(UserShortDto.from(event.getInitiator()))
-                .location(event.getLocation())
+                .location(event.getLocationCoordinates())
                 .paid(event.getPaid())
                 .participantLimit(event.getParticipantLimit())
                 .publishedOn(ExploreDateFormatter.format(event.getPublishedOn()))

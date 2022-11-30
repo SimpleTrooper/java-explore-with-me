@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ru.practicum.explorewithme.base.model.Location;
+import ru.practicum.explorewithme.base.model.LocationCoordinates;
 
 import java.time.LocalDateTime;
 
@@ -24,7 +24,7 @@ public class AdminUpdateEventRequest {
     private String description;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
-    private Location location;
+    private LocationCoordinates location;
     private Boolean paid;
     private Integer participantLimit;
     private Boolean requestModeration;

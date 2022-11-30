@@ -90,7 +90,7 @@ public class AdminEventServiceImpl implements AdminEventService {
             event.setEventDate(adminUpdateEventRequest.getEventDate());
         }
         if (adminUpdateEventRequest.getLocation() != null) {
-            event.setLocation(adminUpdateEventRequest.getLocation());
+            event.setLocationCoordinates(adminUpdateEventRequest.getLocation());
         }
         if (adminUpdateEventRequest.getPaid() != null) {
             event.setPaid(adminUpdateEventRequest.getPaid());

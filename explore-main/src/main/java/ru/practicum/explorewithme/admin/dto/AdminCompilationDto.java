@@ -11,7 +11,7 @@ import ru.practicum.explorewithme.base.model.Compilation;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventWithViews;
 import ru.practicum.explorewithme.base.model.User;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.util.ArrayList;
 import java.util.List;

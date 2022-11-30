@@ -11,8 +11,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.practicum.explorestat.controller.StatsController;
-import ru.practicum.explorestat.util.ExceptionParser;
-import ru.practicum.explorestat.util.ExploreDateFormatter;
+import ru.practicum.util.ExceptionParser;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
