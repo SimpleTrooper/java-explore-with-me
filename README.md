@@ -1,2 +1,7 @@
-# java-explore-with-me
-Template repository for ExploreWithMe project.
+[Пул-реквест](https://github.com/SimpleTrooper/java-explore-with-me/pull/1)
+
+# Explore with me.
+REST-API для приложения организации ивентов.
+
+![ER-Диаграмма основной БД](/png/ExploreER.png)
+![ER-Диаграмма БД статистики](/png/StatisticsER.png)
