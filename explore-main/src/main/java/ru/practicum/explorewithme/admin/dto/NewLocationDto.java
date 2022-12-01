@@ -48,6 +48,7 @@ public class NewLocationDto {
                 .radius(newLocationDto.radius)
                 .name(newLocationDto.name)
                 .description(newLocationDto.description)
+                .resolved(false)
                 .build();
     }
 }

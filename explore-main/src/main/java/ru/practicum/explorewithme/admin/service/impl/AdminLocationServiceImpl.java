@@ -49,8 +49,8 @@ public class AdminLocationServiceImpl implements AdminLocationService {
     @Transactional
     public AdminLocationDto add(NewLocationDto newLocationDto) {
         Location location = NewLocationDto.toLocation(newLocationDto);
-        locationGeocodingResolver.resolve(location);
         locationRepository.save(location);
+        locationGeocodingResolver.resolve(location);
         return AdminLocationDto.from(location);
     }
 
