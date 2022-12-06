@@ -14,6 +14,7 @@ import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.LocationRepository;
 import ru.practicum.explorewithme.base.resolver.LocationGeocodingResolver;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,10 +39,12 @@ public class AdminLocationServiceImpl implements AdminLocationService {
     public List<AdminLocationDto> findAll(List<Long> locationIds, PaginationRequest paginationRequest) {
         if (locationIds != null && locationIds.size() != 0) {
             return locationRepository.findAllByIdIn(locationIds).stream()
+                    .sorted(Comparator.comparingLong(Location::getId))
                     .map(AdminLocationDto::from).collect(Collectors.toList());
         }
         return locationRepository.findAll(paginationRequest.makeOffsetBased()).toList()
                 .stream()
+                .sorted(Comparator.comparingLong(Location::getId))
                 .map(AdminLocationDto::from).collect(Collectors.toList());
     }
 
@@ -59,6 +62,7 @@ public class AdminLocationServiceImpl implements AdminLocationService {
     public AdminLocationDto update(NewLocationDto updatedLocationDto) {
         Location location = findByIdOrThrow(updatedLocationDto.getId());
         updateRequiredFields(location, updatedLocationDto);
+        locationGeocodingResolver.resolve(location);
         return AdminLocationDto.from(location);
     }
 

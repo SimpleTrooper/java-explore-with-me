@@ -10,6 +10,7 @@ import ru.practicum.explorewithme.base.model.Location;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.LocationRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class PublicLocationServiceImpl implements PublicLocationService {
     @Override
     public List<PublicLocationDto> findAll(PaginationRequest paginationRequest) {
         return locationRepository.findAll(paginationRequest.makeOffsetBased()).stream()
+                .sorted(Comparator.comparingLong(Location::getId))
                 .map(PublicLocationDto::from)
                 .collect(Collectors.toList());
     }

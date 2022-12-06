@@ -29,6 +29,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @HandleExceptions
+@Validated
 @RequestMapping("/admin/locations")
 public class AdminLocationController {
     private final AdminLocationService adminLocationService;

@@ -153,6 +153,8 @@ class AdminLocationServiceImplTest {
         assertThat(actual.getName(), equalTo(updatedLocationDto.getName()));
         assertThat(actual.getDescription(), equalTo(updatedLocationDto.getDescription()));
         assertThat(actual.getType(), equalTo(updatedLocationDto.getType()));
+
+        verify(locationGeocodingResolver, times(1)).resolve(any());
     }
 
     /**
