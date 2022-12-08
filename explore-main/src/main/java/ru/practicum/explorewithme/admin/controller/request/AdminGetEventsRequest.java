@@ -22,6 +22,7 @@ public class AdminGetEventsRequest {
     private List<Long> users;
     private List<EventState> states;
     private List<Long> categories;
+    private Long location;
     private LocalDateTime rangeStart;
     private LocalDateTime rangeEnd;
 }

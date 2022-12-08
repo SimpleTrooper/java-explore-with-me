@@ -43,6 +43,7 @@ public class AdminEventController {
      * @param users      список id инициаторов
      * @param states     список состояний
      * @param categories список id категорий
+     * @param location   id локации, в которой будет вестись поиск
      * @param rangeStart дата начала - от
      * @param rangeEnd   дата начала - до
      * @param from       вывести записи начиная с
@@ -53,6 +54,7 @@ public class AdminEventController {
     public List<AdminEventFullDto> findAll(@RequestParam(required = false) List<Long> users,
                                            @RequestParam(required = false) List<String> states,
                                            @RequestParam(required = false) List<Long> categories,
+                                           @RequestParam(required = false) Long location,
                                            @RequestParam(required = false) LocalDateTime rangeStart,
                                            @RequestParam(required = false) LocalDateTime rangeEnd,
                                            @RequestParam(defaultValue = "0") Integer from,
@@ -62,7 +64,7 @@ public class AdminEventController {
         if (states != null) {
             eventStates = states.stream().map(EventState::from).collect(Collectors.toList());
         }
-        AdminGetEventsRequest getEventsRequest = new AdminGetEventsRequest(users, eventStates, categories,
+        AdminGetEventsRequest getEventsRequest = new AdminGetEventsRequest(users, eventStates, categories, location,
                 rangeStart, rangeEnd);
         PaginationRequest paginationRequest = new PaginationRequest(from, size);
         return adminEventService.findAll(getEventsRequest, paginationRequest);
