@@ -21,6 +21,9 @@ public class LocationGeocodingResolver {
     }
 
     public void resolve(Location location) {
+        if (location == null) {
+            return;
+        }
         OutputLocationDto outputLocationDto = null;
         try {
             outputLocationDto = feignClientForGeocode.reverseGeocode(location.getLat(),
@@ -32,7 +35,6 @@ public class LocationGeocodingResolver {
                     location.getLon(),
                     feignException);
         }
-        location.setResolved(false);
         if (outputLocationDto != null) {
             location.setCountry(outputLocationDto.getCountry());
             location.setState(outputLocationDto.getState());
