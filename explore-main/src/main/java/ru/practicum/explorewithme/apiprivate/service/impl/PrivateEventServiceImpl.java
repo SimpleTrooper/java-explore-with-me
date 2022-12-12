@@ -86,7 +86,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
             event.setEventDate(newEventDto.getEventDate());
         }
         if (newEventDto.getLocation() != null) {
-            event.setLocation(newEventDto.getLocation());
+            event.setLocationCoordinates(newEventDto.getLocation());
         }
         if (newEventDto.getPaid() != null) {
             event.setPaid(newEventDto.getPaid());

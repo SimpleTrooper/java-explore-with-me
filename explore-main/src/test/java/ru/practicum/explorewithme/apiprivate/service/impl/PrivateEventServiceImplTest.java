@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.apiprivate.dto.NewEventDto;
 import ru.practicum.explorewithme.apiprivate.dto.PrivateEventFullDto;
 import ru.practicum.explorewithme.apiprivate.dto.PrivateEventShortDto;
@@ -24,13 +25,13 @@ import ru.practicum.explorewithme.base.exception.EventNotFoundException;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
-import ru.practicum.explorewithme.base.model.Location;
+import ru.practicum.explorewithme.base.model.LocationCoordinates;
 import ru.practicum.explorewithme.base.model.User;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.CategoryRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
 import ru.practicum.explorewithme.base.repository.UserRepository;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -49,13 +50,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Интеграционные тесты PrivateEventServiceImpl
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({PrivateEventServiceImpl.class, ExploreDateFormatter.class})
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.WARN)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PrivateEventServiceImplTest {
     @MockBean
-    ExploreClient exploreClient;
+    ExploreClientForStats exploreClientForStats;
     final UserRepository userRepository;
     @InjectMocks
     final EventRepository eventRepository;
@@ -118,7 +120,7 @@ class PrivateEventServiceImplTest {
         List<Long> eventIds = List.of(event1.getId(), event2.getId());
         Long event1Views = 5L;
         Long event2Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views, event2.getId(), event2Views));
 
         List<PrivateEventShortDto> actual = privateEventService.findAllByInitiatorId(user1.getId(),
@@ -135,7 +137,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.get(1).getCategory().getId(), equalTo(event2.getCategory().getId()));
         assertThat(actual.get(1).getViews(), equalTo(event2Views));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -145,14 +147,14 @@ class PrivateEventServiceImplTest {
     void shouldUpdate() {
         List<Long> eventIds = List.of(event1.getId());
         Long event1Views = 5L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views));
         NewEventDto newEventDto = NewEventDto.builder()
                 .annotation("New annotation")
                 .category(category.getId())
                 .description("New description")
                 .eventDate(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
-                .location(new Location(0., 2.))
+                .location(new LocationCoordinates(0., 2.))
                 .paid(true)
                 .participantLimit(50)
                 .requestModeration(true)
@@ -177,7 +179,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.getViews(), equalTo(event1Views));
         assertThat(actual.getConfirmedRequests(), equalTo(0L));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -190,7 +192,7 @@ class PrivateEventServiceImplTest {
                 .category(category.getId())
                 .description("New description")
                 .eventDate(LocalDateTime.now().plusDays(1).truncatedTo(ChronoUnit.SECONDS))
-                .location(new Location(0., 2.))
+                .location(new LocationCoordinates(0., 2.))
                 .paid(true)
                 .participantLimit(50)
                 .requestModeration(true)
@@ -225,7 +227,7 @@ class PrivateEventServiceImplTest {
     void shouldFindById() {
         List<Long> eventIds = List.of(event1.getId());
         Long event1Views = 5L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views));
 
         PrivateEventFullDto actual = privateEventService.findById(user1.getId(), event1.getId());
@@ -237,7 +239,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.getDescription(), equalTo(event1.getDescription()));
         assertThat(actual.getEventDate(), equalTo(ExploreDateFormatter.format(event1.getEventDate())));
         assertThat(actual.getAnnotation(), equalTo(event1.getAnnotation()));
-        assertThat(actual.getLocation(), equalTo(event1.getLocation()));
+        assertThat(actual.getLocation(), equalTo(event1.getLocationCoordinates()));
         assertThat(actual.getParticipantLimit(), equalTo(event1.getParticipantLimit()));
         assertThat(actual.getRequestModeration(), equalTo(event1.getRequestModeration()));
         assertThat(actual.getTitle(), equalTo(event1.getTitle()));
@@ -246,7 +248,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.getConfirmedRequests(), equalTo(0L));
         assertThat(actual.getState(), equalTo(event1.getEventState()));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -256,7 +258,7 @@ class PrivateEventServiceImplTest {
     void shouldCancel() {
         List<Long> eventIds = List.of(event1.getId());
         Long event1Views = 5L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views));
         event1.setEventState(EventState.PENDING);
 
@@ -269,7 +271,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.getDescription(), equalTo(event1.getDescription()));
         assertThat(actual.getEventDate(), equalTo(ExploreDateFormatter.format(event1.getEventDate())));
         assertThat(actual.getAnnotation(), equalTo(event1.getAnnotation()));
-        assertThat(actual.getLocation(), equalTo(event1.getLocation()));
+        assertThat(actual.getLocation(), equalTo(event1.getLocationCoordinates()));
         assertThat(actual.getParticipantLimit(), equalTo(event1.getParticipantLimit()));
         assertThat(actual.getRequestModeration(), equalTo(event1.getRequestModeration()));
         assertThat(actual.getTitle(), equalTo(event1.getTitle()));
@@ -278,7 +280,7 @@ class PrivateEventServiceImplTest {
         assertThat(actual.getConfirmedRequests(), equalTo(0L));
         assertThat(actual.getState(), equalTo(EventState.CANCELED));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -288,12 +290,12 @@ class PrivateEventServiceImplTest {
     void shouldNotCancelCanceledEvent() {
         List<Long> eventIds = List.of(event1.getId());
         Long event1Views = 5L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views));
 
          assertThrows(ConditionsNotMetException.class, () -> privateEventService.cancel(user1.getId(), event1.getId()));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -308,6 +310,6 @@ class PrivateEventServiceImplTest {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(exploreClient);
+        verifyNoMoreInteractions(exploreClientForStats);
     }
 }

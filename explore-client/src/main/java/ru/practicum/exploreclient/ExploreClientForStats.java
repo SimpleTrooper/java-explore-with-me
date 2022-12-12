@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Клиент для обмена данными между микросервисами
  */
-public interface ExploreClient {
+public interface ExploreClientForStats {
     /**
      * Получение количества просмотров для событий по списку их id
      * @param eventIds id

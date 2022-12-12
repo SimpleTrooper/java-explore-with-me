@@ -20,8 +20,8 @@ import ru.practicum.explorewithme.apiprivate.dto.NewEventDto;
 import ru.practicum.explorewithme.apiprivate.dto.PrivateEventFullDto;
 import ru.practicum.explorewithme.apiprivate.service.PrivateEventService;
 import ru.practicum.explorewithme.apiprivate.service.PrivateRequestService;
-import ru.practicum.explorewithme.base.model.Location;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.explorewithme.base.model.LocationCoordinates;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -71,7 +71,7 @@ class PrivateEventControllerTest {
                 .category(1L)
                 .description("New description")
                 .eventDate(LocalDateTime.now().plusHours(3).truncatedTo(ChronoUnit.SECONDS))
-                .location(new Location(0.0, 0.0))
+                .location(new LocationCoordinates(0.0, 0.0))
                 .paid(false)
                 .participantLimit(10)
                 .requestModeration(false)
@@ -127,7 +127,7 @@ class PrivateEventControllerTest {
                 .category(1L)
                 .description("New description")
                 .eventDate(LocalDateTime.now().plusHours(1).truncatedTo(ChronoUnit.SECONDS))
-                .location(new Location(0.0, 0.0))
+                .location(new LocationCoordinates(0.0, 0.0))
                 .paid(false)
                 .participantLimit(10)
                 .requestModeration(false)

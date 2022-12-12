@@ -21,7 +21,8 @@ import java.util.List;
 public class AdminGetEventsRequest {
     private List<Long> users;
     private List<EventState> states;
-    List<Long> categories;
-    LocalDateTime rangeStart;
-    LocalDateTime rangeEnd;
+    private List<Long> categories;
+    private Long location;
+    private LocalDateTime rangeStart;
+    private LocalDateTime rangeEnd;
 }

@@ -7,11 +7,13 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/explore-stat
       - SPRING_DATASOURCE_USERNAME=explore-stat
       - SPRING_DATASOURCE_PASSWORD=explore-stat
-      - EXPLORE_REMOTE_SERVICE_URL=http://ewm-service:8080
     ports:
       - "9090:9090"
     depends_on:
       - stats-db
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
   stats-db:
     image: postgres:14-alpine
@@ -21,6 +23,9 @@ services:
       - POSTGRES_PASSWORD=explore-stat
     ports:
       - "6543:5432"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
   ewm-service:
     build: ./explore-main
@@ -29,12 +34,17 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/explore
       - SPRING_DATASOURCE_USERNAME=explore
       - SPRING_DATASOURCE_PASSWORD=explore
-      - EXPLORE_REMOTE_SERVICE_URL=http://stats-server:9090
+      - EXPLORE_STATS_SERVICE_URL=http://stats-server:9090
+      - EXPLORE_GEOCODE_SERVICE_URL=http://geocode-server:9191
     ports:
       - "8080:8080"
     depends_on:
       - stats-server
       - ewm-db
+      - geocode-server
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
 
   ewm-db:
     image: postgres:14-alpine
@@ -44,3 +54,18 @@ services:
       - POSTGRES_PASSWORD=explore
     ports:
       - "6542:5432"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  geocode-server:
+    build: ./explore-geocoding
+    container_name: geocode-service
+    environment:
+      - GRAPHHOPPER_URL=https://graphhopper.com/api/1
+      - GRAPHHOPPER_API_KEY=ec943230-806e-478b-ae23-17b12937724f
+    ports:
+      - "9191:9191"
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro

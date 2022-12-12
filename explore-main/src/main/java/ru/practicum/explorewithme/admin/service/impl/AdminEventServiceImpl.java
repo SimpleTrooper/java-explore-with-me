@@ -1,6 +1,7 @@
 package ru.practicum.explorewithme.admin.service.impl;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,17 @@ import ru.practicum.explorewithme.admin.service.AdminEventService;
 import ru.practicum.explorewithme.base.exception.CategoryNotFoundException;
 import ru.practicum.explorewithme.base.exception.ConditionsNotMetException;
 import ru.practicum.explorewithme.base.exception.EventNotFoundException;
+import ru.practicum.explorewithme.base.exception.LocationNotFoundException;
 import ru.practicum.explorewithme.base.model.Category;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventState;
 import ru.practicum.explorewithme.base.model.EventWithViews;
+import ru.practicum.explorewithme.base.model.Location;
 import ru.practicum.explorewithme.base.model.QEvent;
 import ru.practicum.explorewithme.base.pagination.PaginationRequest;
 import ru.practicum.explorewithme.base.repository.CategoryRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
+import ru.practicum.explorewithme.base.repository.LocationRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -34,12 +38,15 @@ import java.util.stream.Collectors;
 public class AdminEventServiceImpl implements AdminEventService {
     private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
+    private final LocationRepository locationRepository;
 
     @Autowired
     public AdminEventServiceImpl(EventRepository eventRepository,
-                                 CategoryRepository categoryRepository) {
+                                 CategoryRepository categoryRepository,
+                                 LocationRepository locationRepository) {
         this.eventRepository = eventRepository;
         this.categoryRepository = categoryRepository;
+        this.locationRepository = locationRepository;
     }
 
     @Override
@@ -54,6 +61,13 @@ public class AdminEventServiceImpl implements AdminEventService {
         }
         if (getEventsRequest.getCategories() != null && getEventsRequest.getCategories().size() != 0) {
             booleanBuilder.and(QEvent.event.category.id.in(getEventsRequest.getCategories()));
+        }
+        if (getEventsRequest.getLocation() != null) {
+            Location location = findLocationByIdOrThrow(getEventsRequest.getLocation());
+            booleanBuilder.and(Expressions.numberTemplate(Double.class, "distance({0}, {1}, {2}, {3})",
+                            location.getLat(), location.getLon(),
+                            QEvent.event.locationCoordinates.lat, QEvent.event.locationCoordinates.lon)
+                    .loe(location.getRadius()));
         }
         if (getEventsRequest.getRangeStart() != null) {
             booleanBuilder.and(QEvent.event.eventDate.goe(getEventsRequest.getRangeStart()));
@@ -90,7 +104,7 @@ public class AdminEventServiceImpl implements AdminEventService {
             event.setEventDate(adminUpdateEventRequest.getEventDate());
         }
         if (adminUpdateEventRequest.getLocation() != null) {
-            event.setLocation(adminUpdateEventRequest.getLocation());
+            event.setLocationCoordinates(adminUpdateEventRequest.getLocation());
         }
         if (adminUpdateEventRequest.getPaid() != null) {
             event.setPaid(adminUpdateEventRequest.getPaid());
@@ -155,5 +169,11 @@ public class AdminEventServiceImpl implements AdminEventService {
         return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryNotFoundException(String.format("Category with id = %d " +
                         "is not found", categoryId)));
+    }
+
+    private Location findLocationByIdOrThrow(Long locationId) {
+        return locationRepository.findById(locationId)
+                .orElseThrow(() -> new LocationNotFoundException(String.format("Location with id = %d " +
+                        "is not found", locationId)));
     }
 }

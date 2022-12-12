@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.practicum.explorewithme.base.exception.ConditionsNotMetException;
 import ru.practicum.explorewithme.base.exception.NotFoundException;
 import ru.practicum.explorewithme.base.exception.WrongStateException;
-import ru.practicum.explorewithme.base.util.ExceptionParser;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExceptionParser;
+import ru.practicum.util.ExploreDateFormatter;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;

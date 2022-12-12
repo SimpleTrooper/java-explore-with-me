@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.exploreclient.dto.EndpointHit;
 import ru.practicum.explorewithme.apipublic.controller.request.PublicGetEventsRequest;
 import ru.practicum.explorewithme.apipublic.controller.request.SortType;
@@ -32,16 +32,16 @@ import java.util.List;
 @RequestMapping("/events")
 public class PublicEventController {
     private final PublicEventService publicEventService;
-    private final ExploreClient exploreClient;
+    private final ExploreClientForStats exploreClientForStats;
 
     @Value("${explore.app.id}")
     private String exploreAppId;
 
     @Autowired
     public PublicEventController(PublicEventService publicEventService,
-                                 ExploreClient exploreClient) {
+                                 ExploreClientForStats exploreClientForStats) {
         this.publicEventService = publicEventService;
-        this.exploreClient = exploreClient;
+        this.exploreClientForStats = exploreClientForStats;
     }
 
     /**
@@ -49,6 +49,7 @@ public class PublicEventController {
      *
      * @param text          текст для поиска в содержимом аннотации и подробном описании события
      * @param categories    список идентификаторов категорий в которых будет вестись поиск
+     * @param location      id локации, в которой будет вестись поиск
      * @param paid          поиск только платных/бесплатных событий
      * @param rangeStart    дата и время не раньше которых должно произойти событие
      * @param rangeEnd      дата и время не позже которых должно произойти событие
@@ -61,6 +62,7 @@ public class PublicEventController {
     @GetMapping
     public List<PublicEventShortDto> findAll(@RequestParam(required = false) String text,
                                              @RequestParam(required = false) List<Long> categories,
+                                             @RequestParam(required = false) Long location,
                                              @RequestParam(required = false) Boolean paid,
                                              @RequestParam(required = false) LocalDateTime rangeStart,
                                              @RequestParam(required = false) LocalDateTime rangeEnd,
@@ -75,12 +77,13 @@ public class PublicEventController {
                 .ip(httpServletRequest.getRemoteAddr())
                 .timestamp(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
-        exploreClient.hit(endpointHit);
+        exploreClientForStats.hit(endpointHit);
 
         log.info("Public request to find all events");
         PublicGetEventsRequest publicGetEventsRequest = PublicGetEventsRequest.builder()
                 .text(text)
                 .categories(categories)
+                .location(location)
                 .paid(paid)
                 .rangeStart(rangeStart)
                 .rangeEnd(rangeEnd)
@@ -105,7 +108,7 @@ public class PublicEventController {
                 .ip(httpServletRequest.getRemoteAddr())
                 .timestamp(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
                 .build();
-        exploreClient.hit(endpointHit);
+        exploreClientForStats.hit(endpointHit);
         log.info("Public request to find event with id = {}", eventId);
         return publicEventService.findById(eventId);
     }

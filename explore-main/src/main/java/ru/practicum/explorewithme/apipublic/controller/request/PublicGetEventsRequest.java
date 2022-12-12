@@ -17,6 +17,7 @@ import java.util.List;
 public class PublicGetEventsRequest {
     private String text;
     private List<Long> categories;
+    private Long location;
     private Boolean paid;
     private LocalDateTime rangeStart;
     private LocalDateTime rangeEnd;

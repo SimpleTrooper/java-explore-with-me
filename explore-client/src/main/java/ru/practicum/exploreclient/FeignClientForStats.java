@@ -1,5 +1,6 @@
 package ru.practicum.exploreclient;
 
+import org.springframework.cloud.openfeign.CollectionFormat;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +15,9 @@ import java.util.List;
 /**
  * OpenFeign клиент для формирования запросов к микросервису статистики
  */
-@PropertySource(value = "/feign.properties")
-@FeignClient(value = "feignClientForStats", url = "${explore.remote-service.url}")
+@PropertySource(value = "/client.properties")
+@FeignClient(value = "feignClientForStats", url = "${explore.stats-service.url}")
+@CollectionFormat(feign.CollectionFormat.CSV)
 public interface FeignClientForStats {
     /**
      * Получить статистику

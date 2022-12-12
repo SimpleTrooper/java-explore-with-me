@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.apipublic.dto.PublicCompilationDto;
 import ru.practicum.explorewithme.apipublic.service.PublicCompilationService;
 import ru.practicum.explorewithme.base.model.Category;
@@ -48,13 +49,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Интеграционные тесты для PublicCompilationServiceImpl
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(PublicCompilationServiceImpl.class)
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.WARN)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PublicCompilationServiceImplTest {
     @MockBean
-    final ExploreClient exploreClient;
+    final ExploreClientForStats exploreClientForStats;
     @InjectMocks
     final UserRepository userRepository;
     final CategoryRepository categoryRepository;
@@ -140,7 +142,7 @@ class PublicCompilationServiceImplTest {
         List<Long> eventIds = List.of(event1.getId(), event2.getId());
         Long event1Views = 5L;
         Long event2Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views, event2.getId(), event2Views));
 
         List<PublicCompilationDto> actual = publicCompilationService.findAll(null,
@@ -164,7 +166,7 @@ class PublicCompilationServiceImplTest {
         assertThat(actual.get(1).getEvents().get(0).getViews(), equalTo(event2Views));
         assertThat(actual.get(1).getEvents().get(0).getConfirmedRequests(), equalTo(1L));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -175,7 +177,7 @@ class PublicCompilationServiceImplTest {
         List<Long> eventIds = List.of(event1.getId(), event2.getId());
         Long event1Views = 5L;
         Long event2Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views, event2.getId(), event2Views));
 
         PublicCompilationDto actual = publicCompilationService.findById(compilation1.getId());
@@ -191,11 +193,11 @@ class PublicCompilationServiceImplTest {
         assertThat(actual.getEvents().get(1).getViews(), equalTo(event2Views));
         assertThat(actual.getEvents().get(1).getConfirmedRequests(), equalTo(1L));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(exploreClient);
+        verifyNoMoreInteractions(exploreClientForStats);
     }
 }

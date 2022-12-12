@@ -4,7 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Pageable;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventWithViews;
 
@@ -23,14 +23,14 @@ import java.util.stream.StreamSupport;
  */
 public class EventRepositoryImpl implements EventRepositoryCustom {
     private final EventRepository eventRepository;
-    private final ExploreClient exploreClient;
+    private final ExploreClientForStats exploreClientForStats;
     private final JPAQueryFactory jpaQueryFactory;
 
     public EventRepositoryImpl(@Lazy EventRepository eventRepository,
-                               @Lazy ExploreClient exploreClient,
+                               @Lazy ExploreClientForStats exploreClientForStats,
                                @Lazy EntityManager entityManager) {
         this.eventRepository = eventRepository;
-        this.exploreClient = exploreClient;
+        this.exploreClientForStats = exploreClientForStats;
         this.jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
@@ -79,7 +79,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         final Map<Long, Long> eventsViews;
         if (events.size() != 0) {
             List<Long> eventIds = events.stream().map(Event::getId).collect(Collectors.toList());
-            eventsViews = exploreClient.getViewsForEvents(eventIds);
+            eventsViews = exploreClientForStats.getViewsForEvents(eventIds);
         } else {
             eventsViews = new HashMap<>();
         }
@@ -88,7 +88,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     }
 
     private Long getViewsForEvent(Long eventId) {
-        return exploreClient.getViewsForEvents(List.of(eventId))
+        return exploreClientForStats.getViewsForEvents(List.of(eventId))
                 .getOrDefault(eventId, 0L);
     }
 }

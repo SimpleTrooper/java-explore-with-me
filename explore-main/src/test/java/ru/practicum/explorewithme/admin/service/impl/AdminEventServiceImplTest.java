@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.admin.controller.request.AdminGetEventsRequest;
 import ru.practicum.explorewithme.admin.dto.AdminEventFullDto;
 import ru.practicum.explorewithme.admin.dto.AdminUpdateEventRequest;
@@ -28,7 +29,7 @@ import ru.practicum.explorewithme.base.repository.CategoryRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
 import ru.practicum.explorewithme.base.repository.RequestRepository;
 import ru.practicum.explorewithme.base.repository.UserRepository;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -46,13 +47,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Интеграционные тесты для AdminEventServiceImpl
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({AdminEventServiceImpl.class, ExploreDateFormatter.class})
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.WARN)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class AdminEventServiceImplTest {
     @MockBean
-    final ExploreClient exploreClient;
+    final ExploreClientForStats exploreClientForStats;
     @InjectMocks
     final EventRepository eventRepository;
     final RequestRepository requestRepository;
@@ -135,7 +137,7 @@ class AdminEventServiceImplTest {
         List<Long> eventIds = List.of(event1.getId(), event2.getId());
         Long event1Views = 5L;
         Long event2Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views, event2.getId(), event2Views));
         AdminGetEventsRequest getEventsRequest = AdminGetEventsRequest.builder()
                 .users(List.of(user1.getId()))
@@ -158,7 +160,7 @@ class AdminEventServiceImplTest {
         assertThat(actual.get(1).getInitiator().getId(), equalTo(event2.getInitiator().getId()));
         assertThat(actual.get(1).getCategory().getId(), equalTo(event2.getCategory().getId()));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -169,7 +171,7 @@ class AdminEventServiceImplTest {
         Integer participantLimit = 10;
         List<Long> eventIds = List.of(event1.getId());
         Long event1Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views));
         AdminUpdateEventRequest adminUpdateEventRequest = AdminUpdateEventRequest.builder()
                 .title("Updated title")
@@ -191,7 +193,7 @@ class AdminEventServiceImplTest {
         assertThat(actual.getParticipantLimit(), equalTo(adminUpdateEventRequest.getParticipantLimit()));
         assertThat(actual.getCategory().getId(), equalTo(adminUpdateEventRequest.getCategory()));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -201,7 +203,7 @@ class AdminEventServiceImplTest {
     void shouldPublish() {
         List<Long> eventIds = List.of(event3.getId());
         Long event3Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event3.getId(), event3Views));
 
         AdminEventFullDto actual = adminEventService.publish(event3.getId());
@@ -213,7 +215,7 @@ class AdminEventServiceImplTest {
         assertThat(actual.getTitle(), equalTo(event3.getTitle()));
         assertThat(actual.getState(), equalTo(EventState.PUBLISHED));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -223,7 +225,7 @@ class AdminEventServiceImplTest {
     void shouldReject() {
         List<Long> eventIds = List.of(event3.getId());
         Long event3Views = 10L;
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event3.getId(), event3Views));
 
         AdminEventFullDto actual = adminEventService.reject(event3.getId());
@@ -233,11 +235,11 @@ class AdminEventServiceImplTest {
         assertThat(actual.getTitle(), equalTo(event3.getTitle()));
         assertThat(actual.getState(), equalTo(EventState.CANCELED));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(exploreClient);
+        verifyNoMoreInteractions(exploreClientForStats);
     }
 }

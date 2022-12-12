@@ -4,10 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import ru.practicum.exploreclient.dto.EndpointHit;
-import ru.practicum.exploreclient.dto.ViewStats;
+import ru.practicum.explorestat.dto.EndpointHit;
+import ru.practicum.explorestat.dto.ViewStats;
 import ru.practicum.explorestat.dto.StatsDto;
 import ru.practicum.explorestat.model.Statistic;
 import ru.practicum.explorestat.repository.StatisticRepository;
@@ -24,6 +25,7 @@ import static org.hamcrest.Matchers.notNullValue;
  * Интеграционные тесты для StatsServiceImpl
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(StatsServiceImpl.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class StatsServiceImplTest {

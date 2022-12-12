@@ -12,7 +12,7 @@ import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.exploreclient.FeignClientForStats;
 import ru.practicum.exploreclient.dto.StatsDto;
 
@@ -34,14 +34,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  * Модульные тесты для ExploreClientImpl
  */
 @ExtendWith(MockitoExtension.class)
-@SpringJUnitConfig(ExploreClientImpl.class)
+@SpringJUnitConfig(ExploreClientForStatsImpl.class)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @MockitoSettings(strictness = Strictness.WARN)
-class ExploreClientImplTest {
+class ExploreClientForStatsImplTest {
     @MockBean
     final FeignClientForStats feignClientForStats;
     @InjectMocks
-    final ExploreClient exploreClient;
+    final ExploreClientForStats exploreClientForStats;
 
     final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     final int daysPeriod = 30;
@@ -64,7 +64,7 @@ class ExploreClientImplTest {
         Mockito.when(feignClientForStats.getStats(startEncoded, endEncoded, uris, true))
                 .thenReturn(List.of(event1Stats, event2Stats));
 
-        Map<Long, Long> actual = exploreClient.getViewsForEvents(eventIds);
+        Map<Long, Long> actual = exploreClientForStats.getViewsForEvents(eventIds);
 
         assertThat(actual, notNullValue());
         assertThat(actual.size(), equalTo(eventIds.size()));

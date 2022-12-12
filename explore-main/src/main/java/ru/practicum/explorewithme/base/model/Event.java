@@ -60,7 +60,8 @@ public class Event {
     private User initiator;
 
     @Embedded
-    private Location location;
+    private LocationCoordinates locationCoordinates;
+
     @Column(name = "paid")
     private Boolean paid;
 
@@ -81,7 +82,7 @@ public class Event {
     private LocalDateTime publishedOn;
 
     @ManyToMany(mappedBy = "events")
-    private List<Compilation> compilations = new ArrayList<>();
+    private final List<Compilation> compilations = new ArrayList<>();
 
     @Column(name = "confirmed_requests")
     private Long confirmedRequests;

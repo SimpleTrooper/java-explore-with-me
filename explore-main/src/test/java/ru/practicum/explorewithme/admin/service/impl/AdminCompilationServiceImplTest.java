@@ -11,10 +11,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import ru.practicum.exploreclient.ExploreClient;
+import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.admin.dto.AdminCompilationDto;
 import ru.practicum.explorewithme.admin.dto.NewCompilationDto;
 import ru.practicum.explorewithme.admin.service.AdminCompilationService;
@@ -48,13 +49,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import(AdminCompilationServiceImpl.class)
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.WARN)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class AdminCompilationServiceImplTest {
     @MockBean
-    final ExploreClient exploreClient;
+    final ExploreClientForStats exploreClientForStats;
     final CompilationRepository compilationRepository;
     @InjectMocks
     final EventRepository eventRepository;
@@ -133,7 +135,7 @@ class AdminCompilationServiceImplTest {
         Long event2Views = 10L;
         NewCompilationDto newCompilationDto = new NewCompilationDto(eventIds,
                 false, "New Compilation");
-        Mockito.when(exploreClient.getViewsForEvents(eventIds))
+        Mockito.when(exploreClientForStats.getViewsForEvents(eventIds))
                 .thenReturn(Map.of(event1.getId(), event1Views, event2.getId(), event2Views));
 
         AdminCompilationDto actual = adminCompilationService.add(newCompilationDto);
@@ -153,7 +155,7 @@ class AdminCompilationServiceImplTest {
         assertThat(actual.getEvents().get(1).getInitiator().getId(), equalTo(user.getId()));
         assertThat(actual.getEvents().get(1).getViews(), equalTo(event2Views));
 
-        verify(exploreClient, times(1)).getViewsForEvents(eventIds);
+        verify(exploreClientForStats, times(1)).getViewsForEvents(eventIds);
     }
 
     /**
@@ -226,6 +228,6 @@ class AdminCompilationServiceImplTest {
 
     @AfterEach
     void tearDown() {
-        verifyNoMoreInteractions(exploreClient);
+        verifyNoMoreInteractions(exploreClientForStats);
     }
 }

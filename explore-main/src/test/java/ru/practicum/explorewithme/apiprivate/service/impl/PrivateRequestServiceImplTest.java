@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import ru.practicum.explorewithme.apiprivate.dto.ParticipationRequestDto;
@@ -19,7 +20,7 @@ import ru.practicum.explorewithme.base.repository.CategoryRepository;
 import ru.practicum.explorewithme.base.repository.EventRepository;
 import ru.practicum.explorewithme.base.repository.RequestRepository;
 import ru.practicum.explorewithme.base.repository.UserRepository;
-import ru.practicum.explorewithme.base.util.ExploreDateFormatter;
+import ru.practicum.util.ExploreDateFormatter;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Интеграционные тесты PrivateRequestServiceImpl
  */
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({PrivateRequestServiceImpl.class, ExploreDateFormatter.class})
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 class PrivateRequestServiceImplTest {
