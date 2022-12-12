@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 public class StatsServiceImpl implements StatsService {
-    private StatisticRepository statisticRepository;
+    private final StatisticRepository statisticRepository;
 
     public StatsServiceImpl(StatisticRepository statisticRepository) {
         this.statisticRepository = statisticRepository;

@@ -1,0 +1,3094 @@
+{
+	"info": {
+		"_postman_id": "d8f7be94-2215-4888-a53e-8899fcbea613",
+		"name": "Test Explore With Me - Locations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21566078"
+	},
+	"item": [
+		{
+			"name": "Preparatory data",
+			"item": [
+				{
+					"name": "Add users",
+					"item": [
+						{
+							"name": "Add user 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target.name).to.eql('User1');",
+											"    pm.expect(target.email).to.eql('user1@mail.ru');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"User1\",\n    \"email\": \"user1@mail.ru\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add user 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target.name).to.eql('User2');",
+											"    pm.expect(target.email).to.eql('user2@yandex.ru');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"User2\",\n    \"email\": \"user2@yandex.ru\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add categories",
+					"item": [
+						{
+							"name": "Add category excursion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target.name).to.eql('Excursion');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Excursion\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add category adventure",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target.name).to.eql('Adventure');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Adventure\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add events for locations",
+					"item": [
+						{
+							"name": "Add excursion in Moscow museum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target.title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target.annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target.category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target.paid).to.eql(true);",
+											"    pm.expect(target.eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target.initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target.views).to.eql(0);",
+											"    pm.expect(target.confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Экскурсия по музею в Москве.\",\n  \"category\": {{excursionId}},\n  \"description\": \"Интересная экскурсия.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.755324029717784,\n    \"lon\": 37.61784587490247\n  },\n  \"paid\": true,\n  \"participantLimit\": 10,\n  \"requestModeration\": false,\n  \"title\": \"Экскурсия по музею\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/{{user1Id}}/events",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"{{user1Id}}",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add adventure in Moscow city",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target.title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target.annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target.category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target.paid).to.eql(false);",
+											"    pm.expect(target.eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target.initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target.views).to.eql(0);",
+											"    pm.expect(target.confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Приключение в Москве.\",\n  \"category\": {{adventureId}},\n  \"description\": \"Время приключений.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.752973179624334, \n    \"lon\": 37.6237012351618\n  },\n  \"paid\": false,\n  \"participantLimit\": 400,\n  \"requestModeration\": false,\n  \"title\": \"Приключение на 10 минут\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/{{user2Id}}/events",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"{{user2Id}}",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add excursion in Nizhniy planetarium",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target.title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target.annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target.category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target.paid).to.eql(false);",
+											"    pm.expect(target.eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target.initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target.views).to.eql(0);",
+											"    pm.expect(target.confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Экскурсия по планетарию в Нижнем Новгороде.\",\n  \"category\": {{excursionId}},\n  \"description\": \"Интересная экскурсия.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 56.318576441873695, \n    \"lon\": 43.95481765476388\n  },\n  \"paid\": false,\n  \"participantLimit\": 130,\n  \"requestModeration\": false,\n  \"title\": \"Экскурсия по планетарию\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/{{user1Id}}/events",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"{{user1Id}}",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add adventure in Nizhniy city",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const nizhniyAdventureId = pm.collectionVariables.get('nizhniyAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(nizhniyAdventureId);",
+											"    pm.expect(target.title).to.eql('Приключение на 5 минут');",
+											"    pm.expect(target.annotation).to.eql('Приключение в Нижнем Новгороде.');",
+											"    pm.expect(target.category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target.paid).to.eql(false);",
+											"    pm.expect(target.eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target.initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target.views).to.eql(0);",
+											"    pm.expect(target.confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Приключение в Нижнем Новгороде.\",\n  \"category\": {{adventureId}},\n  \"description\": \"Время приключений.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 56.318642670095684, \n    \"lon\": 43.95294465321076\n  },\n  \"paid\": false,\n  \"participantLimit\": 200,\n  \"requestModeration\": false,\n  \"title\": \"Приключение на 5 минут\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/{{user2Id}}/events",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"{{user2Id}}",
+										"events"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add adventure in Rome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const romeAdventureId = pm.collectionVariables.get('romeAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(romeAdventureId);",
+											"    pm.expect(target.title).to.eql('Приключение на 15 минут');",
+											"    pm.expect(target.annotation).to.eql('Приключение в Риме.');",
+											"    pm.expect(target.category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target.paid).to.eql(false);",
+											"    pm.expect(target.eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target.initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target.views).to.eql(0);",
+											"    pm.expect(target.confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Приключение в Риме.\",\n  \"category\": {{adventureId}},\n  \"description\": \"Время приключений.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 41.89291893170586, \n    \"lon\": 12.482555919167854\n  },\n  \"paid\": false,\n  \"participantLimit\": 200,\n  \"requestModeration\": false,\n  \"title\": \"Приключение на 15 минут\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/{{user2Id}}/events",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"{{user2Id}}",
+										"events"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Publish events",
+					"item": [
+						{
+							"name": "Publish excursion in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\n  \"category\": 2,\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.755324029717784,\n    \"lon\": 37.61784587490247\n  },\n  \"paid\": true,\n  \"participantLimit\": 10,\n  \"requestModeration\": false,\n  \"title\": \"Сплав на байдарках\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/events/{{moscowExcursionId}}/publish",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events",
+										"{{moscowExcursionId}}",
+										"publish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish adventure in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\n  \"category\": 2,\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.755324029717784,\n    \"lon\": 37.61784587490247\n  },\n  \"paid\": true,\n  \"participantLimit\": 10,\n  \"requestModeration\": false,\n  \"title\": \"Сплав на байдарках\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/events/{{moscowAdventureId}}/publish",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events",
+										"{{moscowAdventureId}}",
+										"publish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish excursion in Nizhniy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/events/{{nizhniyExcursionId}}/publish",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events",
+										"{{nizhniyExcursionId}}",
+										"publish"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish adventure in Nizhniy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"annotation\": \"Сплав на байдарках похож на полет.\",\n  \"category\": 2,\n  \"description\": \"Сплав на байдарках похож на полет. На спокойной воде — это парение. На бурной, порожистой — выполнение фигур высшего пилотажа. И то, и другое дарят чувство обновления, феерические эмоции, яркие впечатления.\",\n  \"eventDate\": \"2024-12-31 15:10:05\",\n  \"location\": {\n    \"lat\": 55.755324029717784,\n    \"lon\": 37.61784587490247\n  },\n  \"paid\": true,\n  \"participantLimit\": 10,\n  \"requestModeration\": false,\n  \"title\": \"Сплав на байдарках\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/events/{{nizhniyAdventureId}}/publish",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events",
+										"{{nizhniyAdventureId}}",
+										"publish"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Locations test",
+			"item": [
+				{
+					"name": "Add locations",
+					"item": [
+						{
+							"name": "Add Russia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const russiaId = pm.collectionVariables.get('russiaId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(russiaId);",
+											"    pm.expect(target.type).to.eql('COUNTRY');",
+											"    pm.expect(target.lat).to.eql(65.06374151810545);",
+											"    pm.expect(target.lon).to.eql(97.18216701555116);",
+											"    pm.expect(target.radius).to.eql(4000);",
+											"    pm.expect(target.name).to.eql('Russian Federation');",
+											"    pm.expect(target.description).to.eql('Country in Eurasia with 143 mln population');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"COUNTRY\",\n    \"lat\": 65.06374151810545,\n    \"lon\": 97.18216701555116,\n    \"radius\": 4000,\n    \"name\": \"Russian Federation\",\n    \"description\": \"Country in Eurasia with 143 mln population\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowId = pm.collectionVariables.get('moscowId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowId);",
+											"    pm.expect(target.type).to.eql('CITY');",
+											"    pm.expect(target.lat).to.eql(55.74663464166448);",
+											"    pm.expect(target.lon).to.eql(37.62017078502165);",
+											"    pm.expect(target.radius).to.eql(10);",
+											"    pm.expect(target.name).to.eql('Moscow');",
+											"    pm.expect(target.description).to.eql('Capital city of Russia');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"CITY\",\n    \"lat\": 55.74663464166448,\n    \"lon\": 37.62017078502165,\n    \"radius\": 10,\n    \"name\": \"Moscow\",\n    \"description\": \"Capital city of Russia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Nizhniy Novgorod",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const nizhniyId = pm.collectionVariables.get('nizhniyId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(nizhniyId);",
+											"    pm.expect(target.type).to.eql('CITY');",
+											"    pm.expect(target.lat).to.eql(56.31856370402209);",
+											"    pm.expect(target.lon).to.eql(43.954817683392314);",
+											"    pm.expect(target.radius).to.eql(10);",
+											"    pm.expect(target.name).to.eql('Nizhniy Novgorod');",
+											"    pm.expect(target.description).to.eql('City in Russia');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"CITY\",\n    \"lat\": 56.31856370402209,\n    \"lon\": 43.954817683392314,\n    \"radius\": 10,\n    \"name\": \"Nizhniy Novgorod\",\n    \"description\": \"City in Russia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add museum in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowMuseumId = pm.collectionVariables.get('moscowMuseumId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowMuseumId);",
+											"    pm.expect(target.type).to.eql('ADDRESS');",
+											"    pm.expect(target.lat).to.eql(55.755335665989286);",
+											"    pm.expect(target.lon).to.eql(37.617843797798976);",
+											"    pm.expect(target.radius).to.eql(0.1);",
+											"    pm.expect(target.name).to.eql('State historical museum');",
+											"    pm.expect(target.description).to.eql('History museum');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"ADDRESS\",\n    \"lat\": 55.755335665989286, \n    \"lon\": 37.617843797798976,\n    \"radius\": 0.1,\n    \"name\": \"State historical museum\",\n    \"description\": \"History museum\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add planetarium in Nizhniy Novgorod",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const nizhniyPlanetariumId = pm.collectionVariables.get('nizhniyPlanetariumId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(nizhniyPlanetariumId);",
+											"    pm.expect(target.type).to.eql('ADDRESS');",
+											"    pm.expect(target.lat).to.eql(56.31856370402209);",
+											"    pm.expect(target.lon).to.eql(43.954817683392314);",
+											"    pm.expect(target.radius).to.eql(0.1);",
+											"    pm.expect(target.name).to.eql('Nizhniy Novgorod planetarium named after G.M. Grechko');",
+											"    pm.expect(target.description).to.eql('Planetarium');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"ADDRESS\",\n    \"lat\": 56.31856370402209,\n    \"lon\": 43.954817683392314,\n    \"radius\": 0.1,\n    \"name\": \"Nizhniy Novgorod planetarium named after G.M. Grechko\",\n    \"description\": \"Planetarium\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Rome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const romeId = pm.collectionVariables.get('romeId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(romeId);",
+											"    pm.expect(target.type).to.eql('CITY');",
+											"    pm.expect(target.lat).to.eql(41.89291893170586);",
+											"    pm.expect(target.lon).to.eql(12.482555919167854);",
+											"    pm.expect(target.radius).to.eql(11);",
+											"    pm.expect(target.name).to.eql('Rome');",
+											"    pm.expect(target.description).to.eql('City of Rome');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"CITY\",\n    \"lat\": 41.89291893170586, \n    \"lon\": 12.482555919167854,\n    \"radius\": 11,\n    \"name\": \"Rome\",\n    \"description\": \"City of Rome\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Earth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const earthId = pm.collectionVariables.get('earthId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(earthId);",
+											"    pm.expect(target.type).to.eql('PLACE');",
+											"    pm.expect(target.lat).to.eql(41.89291893170586);",
+											"    pm.expect(target.lon).to.eql(12.482555919167854);",
+											"    pm.expect(target.radius).to.eql(11000);",
+											"    pm.expect(target.name).to.eql('Earth');",
+											"    pm.expect(target.description).to.eql('3-th planet in Solar system');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PLACE\",\n    \"lat\": 41.89291893170586, \n    \"lon\": 12.482555919167854,\n    \"radius\": 11000,\n    \"name\": \"Earth\",\n    \"description\": \"3-th planet in Solar system\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Norvegian sea",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const norvegianSeaId = pm.collectionVariables.get('norvegianSeaId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(norvegianSeaId);",
+											"    pm.expect(target.type).to.eql('PLACE');",
+											"    pm.expect(target.lat).to.eql(68.8030703473509);",
+											"    pm.expect(target.lon).to.eql(3.5415307028366856);",
+											"    pm.expect(target.radius).to.eql(700);",
+											"    pm.expect(target.name).to.eql('Norvegian sea');",
+											"    pm.expect(target.description).to.eql('Norvegian sea');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PLACE\",\n    \"lat\": 68.8030703473509, \n    \"lon\": 3.5415307028366856,\n    \"radius\": 700,\n    \"name\": \"Norvegian sea\",\n    \"description\": \"Norvegian sea\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Blank name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 400\", function () {",
+											"    pm.response.to.be.badRequest;   ",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PLACE\",\n    \"lat\": 41.89291893170586, \n    \"lon\": 12.482555919167854,\n    \"radius\": 11000,\n    \"name\": \"\",\n    \"description\": \"3-th planet in Solar system\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update locations",
+					"item": [
+						{
+							"name": "Update Russia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const russiaId = pm.collectionVariables.get('russiaId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(russiaId);",
+											"    pm.expect(target.type).to.eql('COUNTRY');",
+											"    pm.expect(target.lat).to.eql(62.5573202961182);",
+											"    pm.expect(target.lon).to.eql(97.40514772746525);",
+											"    pm.expect(target.radius).to.eql(4100);",
+											"    pm.expect(target.name).to.eql('Russian Federation');",
+											"    pm.expect(target.description).to.eql('Country in Eurasia with 143 mln population');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{russiaId}},\n    \"type\": \"COUNTRY\",\n    \"lat\": 62.5573202961182,\n    \"lon\": 97.40514772746525,\n    \"radius\": 4100,\n    \"name\": \"Russian Federation\",\n    \"description\": \"Country in Eurasia with 143 mln population\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update location without id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 400\", function () {",
+											"    pm.response.to.be.badRequest;    ",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"COUNTRY\",\n    \"lat\": 62.5573202961182,\n    \"lon\": 97.40514772746525,\n    \"radius\": 4100,\n    \"name\": \"Russian Federation\",\n    \"description\": \"Country in Eurasia with 143 mln population\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete locations",
+					"item": [
+						{
+							"name": "Add some place",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const somePlaceId = pm.collectionVariables.get('somePlaceId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(somePlaceId);",
+											"    pm.expect(target.type).to.eql('PLACE');",
+											"    pm.expect(target.lat).to.eql(65.06374151810545);",
+											"    pm.expect(target.lon).to.eql(97.18216701555116);",
+											"    pm.expect(target.radius).to.eql(1000);",
+											"    pm.expect(target.name).to.eql('Some place');",
+											"    pm.expect(target.description).to.eql('Some place in middle of Russia');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PLACE\",\n    \"lat\": 65.06374151810545,\n    \"lon\": 97.18216701555116,\n    \"radius\": 1000,\n    \"name\": \"Some place\",\n    \"description\": \"Some place in middle of Russia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete some place",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200\", function () {",
+											"    pm.response.to.be.ok;   ",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"PLACE\",\n    \"lat\": 65.06374151810545,\n    \"lon\": 97.18216701555116,\n    \"radius\": 1000,\n    \"name\": \"Some place\",\n    \"description\": \"Some place in middle of Russia\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations/{{somePlaceId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations",
+										"{{somePlaceId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get locations",
+					"item": [
+						{
+							"name": "Find all by ids admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const russiaId = pm.collectionVariables.get('russiaId');",
+											"const moscowId = pm.collectionVariables.get('moscowId');",
+											"const nizhniyPlanetariumId = pm.collectionVariables.get('nizhniyPlanetariumId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(3);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(russiaId);",
+											"    pm.expect(target[0].type).to.eql('COUNTRY');",
+											"    pm.expect(target[0].lat).to.eql(62.5573202961182);",
+											"    pm.expect(target[0].lon).to.eql(97.40514772746525);",
+											"    pm.expect(target[0].radius).to.eql(4100);",
+											"    pm.expect(target[0].name).to.eql('Russian Federation');",
+											"    pm.expect(target[0].description).to.eql('Country in Eurasia with 143 mln population');",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowId);",
+											"    pm.expect(target[1].type).to.eql('CITY');",
+											"    pm.expect(target[1].lat).to.eql(55.74663464166448);",
+											"    pm.expect(target[1].lon).to.eql(37.62017078502165);",
+											"    pm.expect(target[1].radius).to.eql(10);",
+											"    pm.expect(target[1].name).to.eql('Moscow');",
+											"    pm.expect(target[1].description).to.eql('Capital city of Russia');",
+											"",
+											"    pm.expect(target[2].id.toString()).to.eql(nizhniyPlanetariumId);",
+											"    pm.expect(target[2].type).to.eql('ADDRESS');",
+											"    pm.expect(target[2].lat).to.eql(56.31856370402209);",
+											"    pm.expect(target[2].lon).to.eql(43.954817683392314);",
+											"    pm.expect(target[2].radius).to.eql(0.1);",
+											"    pm.expect(target[2].name).to.eql('Nizhniy Novgorod planetarium named after G.M. Grechko');",
+											"    pm.expect(target[2].description).to.eql('Planetarium');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations?locationIds={{russiaId}},{{moscowId}},{{nizhniyPlanetariumId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									],
+									"query": [
+										{
+											"key": "locationIds",
+											"value": "{{russiaId}},{{moscowId}},{{nizhniyPlanetariumId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all by pagination admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowMuseumId = pm.collectionVariables.get('moscowMuseumId');",
+											"const moscowId = pm.collectionVariables.get('moscowId');",
+											"const nizhniyId = pm.collectionVariables.get('nizhniyId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(3);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowId);",
+											"    pm.expect(target[0].type).to.eql('CITY');",
+											"    pm.expect(target[0].lat).to.eql(55.74663464166448);",
+											"    pm.expect(target[0].lon).to.eql(37.62017078502165);",
+											"    pm.expect(target[0].radius).to.eql(10);",
+											"    pm.expect(target[0].name).to.eql('Moscow');",
+											"    pm.expect(target[0].description).to.eql('Capital city of Russia');",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(nizhniyId);",
+											"    pm.expect(target[1].type).to.eql('CITY');",
+											"    pm.expect(target[1].lat).to.eql(56.31856370402209);",
+											"    pm.expect(target[1].lon).to.eql(43.954817683392314);",
+											"    pm.expect(target[1].radius).to.eql(10);",
+											"    pm.expect(target[1].name).to.eql('Nizhniy Novgorod');",
+											"    pm.expect(target[1].description).to.eql('City in Russia');",
+											"",
+											"     pm.expect(target[2].id.toString()).to.eql(moscowMuseumId);",
+											"    pm.expect(target[2].type).to.eql('ADDRESS');",
+											"    pm.expect(target[2].lat).to.eql(55.755335665989286);",
+											"    pm.expect(target[2].lon).to.eql(37.617843797798976);",
+											"    pm.expect(target[2].radius).to.eql(0.1);",
+											"    pm.expect(target[2].name).to.eql('State historical museum');",
+											"    pm.expect(target[2].description).to.eql('History museum');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations?from=0&size=3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all by pagination public",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowMuseumId = pm.collectionVariables.get('moscowMuseumId');",
+											"const moscowId = pm.collectionVariables.get('moscowId');",
+											"const nizhniyId = pm.collectionVariables.get('nizhniyId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(3);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowId);",
+											"    pm.expect(target[0].type).to.eql('CITY');",
+											"    pm.expect(target[0].lat).to.eql(55.74663464166448);",
+											"    pm.expect(target[0].lon).to.eql(37.62017078502165);",
+											"    pm.expect(target[0].radius).to.eql(10);",
+											"    pm.expect(target[0].name).to.eql('Moscow');",
+											"    pm.expect(target[0].description).to.eql('Capital city of Russia');",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(nizhniyId);",
+											"    pm.expect(target[1].type).to.eql('CITY');",
+											"    pm.expect(target[1].lat).to.eql(56.31856370402209);",
+											"    pm.expect(target[1].lon).to.eql(43.954817683392314);",
+											"    pm.expect(target[1].radius).to.eql(10);",
+											"    pm.expect(target[1].name).to.eql('Nizhniy Novgorod');",
+											"    pm.expect(target[1].description).to.eql('City in Russia');",
+											"",
+											"     pm.expect(target[2].id.toString()).to.eql(moscowMuseumId);",
+											"    pm.expect(target[2].type).to.eql('ADDRESS');",
+											"    pm.expect(target[2].lat).to.eql(55.755335665989286);",
+											"    pm.expect(target[2].lon).to.eql(37.617843797798976);",
+											"    pm.expect(target[2].radius).to.eql(0.1);",
+											"    pm.expect(target[2].name).to.eql('State historical museum');",
+											"    pm.expect(target[2].description).to.eql('History museum');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations?from=0&size=3",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations"
+									],
+									"query": [
+										{
+											"key": "from",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find by id public",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowMuseumId = pm.collectionVariables.get('moscowMuseumId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowMuseumId);",
+											"    pm.expect(target.type).to.eql('ADDRESS');",
+											"    pm.expect(target.lat).to.eql(55.755335665989286);",
+											"    pm.expect(target.lon).to.eql(37.617843797798976);",
+											"    pm.expect(target.radius).to.eql(0.1);",
+											"    pm.expect(target.name).to.eql('State historical museum');",
+											"    pm.expect(target.description).to.eql('History museum');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations/{{moscowMuseumId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations",
+										"{{moscowMuseumId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find by wrong id public",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 404\", function () {",
+											"    pm.response.to.be.notFound;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/locations/0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"locations",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all by wrong ids admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations?locationIds=0",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations"
+									],
+									"query": [
+										{
+											"key": "locationIds",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Resolve locations",
+					"item": [
+						{
+							"name": "Resolve location in Surinda",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const russiaId = pm.collectionVariables.get('russiaId');",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(russiaId);",
+											"    pm.expect(target.type).to.eql('COUNTRY');",
+											"    pm.expect(target.lat).to.eql(62.5573202961182);",
+											"    pm.expect(target.lon).to.eql(97.40514772746525);",
+											"    pm.expect(target.radius).to.eql(4100);",
+											"    pm.expect(target.name).to.eql('Russian Federation');",
+											"    pm.expect(target.description).to.eql('Country in Eurasia with 143 mln population');",
+											"    pm.expect(target.resolved).to.eql(true);",
+											"    pm.expect(target.country).to.eql('Russia');",
+											"    pm.expect(Date.parse(target.resolveDate)).to.be.not.below(Date.parse(pm.environment.get('now')));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"",
+											"var now = moment();",
+											"pm.environment.set('now', now.format('YYYY-MM-DD HH:mm:ss'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations/{{russiaId}}/resolve",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations",
+										"{{russiaId}}",
+										"resolve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resolve museum in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const moscowMuseumId = pm.collectionVariables.get('moscowMuseumId');",
+											"",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.id.toString()).to.eql(moscowMuseumId);",
+											"    pm.expect(target.type).to.eql('ADDRESS');",
+											"    pm.expect(target.lat).to.eql(55.755335665989286);",
+											"    pm.expect(target.lon).to.eql(37.617843797798976);",
+											"    pm.expect(target.radius).to.eql(0.1);",
+											"    pm.expect(target.name).to.eql('State historical museum');",
+											"    pm.expect(target.description).to.eql('History museum');",
+											"    pm.expect(target.resolved).to.eql(true);",
+											"    pm.expect(target.city).to.eql('Moscow');",
+											"    pm.expect(target.state).to.eql('Moscow');",
+											"    pm.expect(target.postalCode).to.eql('109012');",
+											"    pm.expect(target.street).to.eql('Red Square');",
+											"    pm.expect(target.houseNumber).to.eql('1');",
+											"    pm.expect(Date.parse(target.resolveDate)).to.be.not.below(Date.parse(pm.environment.get('now')));",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"",
+											"var now = moment();",
+											"pm.environment.set('now', now.format('YYYY-MM-DD HH:mm:ss'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations/{{moscowMuseumId}}/resolve",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations",
+										"{{moscowMuseumId}}",
+										"resolve"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resolve Norvegian sea",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const norvegianSeaId = pm.collectionVariables.get('norvegianSeaId');",
+											"",
+											"",
+											"pm.test(\"Локация должна содержать поля: id, name, description, lat, lon, radius, country, state, city, postalCode, street, type, resolved, resolveDate\", function () {",
+											"pm.expect(target).to.have.property('id');",
+											"pm.expect(target).to.have.property('name');",
+											"pm.expect(target).to.have.property('description');",
+											"pm.expect(target).to.have.property('lat');",
+											"pm.expect(target).to.have.property('lon');",
+											"pm.expect(target).to.have.property('radius');",
+											"pm.expect(target).to.have.property('country');",
+											"pm.expect(target).to.have.property('state');",
+											"pm.expect(target).to.have.property('city');",
+											"pm.expect(target).to.have.property('postalCode');",
+											"pm.expect(target).to.have.property('street');",
+											"pm.expect(target).to.have.property('type');",
+											"pm.expect(target).to.have.property('resolved');",
+											"pm.expect(target).to.have.property('resolveDate');",
+											"});",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"     pm.expect(target.id.toString()).to.eql(norvegianSeaId);",
+											"    pm.expect(target.type).to.eql('PLACE');",
+											"    pm.expect(target.lat).to.eql(68.8030703473509);",
+											"    pm.expect(target.lon).to.eql(3.5415307028366856);",
+											"    pm.expect(target.radius).to.eql(700);",
+											"    pm.expect(target.name).to.eql('Norvegian sea');",
+											"    pm.expect(target.description).to.eql('Norvegian sea');",
+											"    pm.expect(target.resolved).to.eql(false);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');",
+											"",
+											"var now = moment();",
+											"pm.environment.set('now', now.format('YYYY-MM-DD HH:mm:ss'));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/locations/{{norvegianSeaId}}/resolve",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"locations",
+										"{{norvegianSeaId}}",
+										"resolve"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Search events by location",
+					"item": [
+						{
+							"name": "Find all published in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(2);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{moscowId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{moscowId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Moscow museum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(1);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{moscowMuseumId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{moscowMuseumId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Nizhniy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"const nizhniyAdventureId = pm.collectionVariables.get('nizhniyAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(2);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(false);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(nizhniyAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 5 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Нижнем Новгороде.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{nizhniyId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{nizhniyId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Nizhniy planetarium",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(1);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(false);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{nizhniyPlanetariumId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{nizhniyPlanetariumId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Russia",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"const nizhniyAdventureId = pm.collectionVariables.get('nizhniyAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(4);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"",
+											"     pm.expect(target[2].id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target[2].title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target[2].annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target[2].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[2].paid).to.eql(false);",
+											"    pm.expect(target[2].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[2].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[2].views).to.eql(0);",
+											"    pm.expect(target[2].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[3].id.toString()).to.eql(nizhniyAdventureId);",
+											"    pm.expect(target[3].title).to.eql('Приключение на 5 минут');",
+											"    pm.expect(target[3].annotation).to.eql('Приключение в Нижнем Новгороде.');",
+											"    pm.expect(target[3].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[3].paid).to.eql(false);",
+											"    pm.expect(target[3].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[3].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[3].views).to.eql(0);",
+											"    pm.expect(target[3].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{russiaId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{russiaId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Rome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{romeId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{romeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all published in Earth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"const nizhniyAdventureId = pm.collectionVariables.get('nizhniyAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(4);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"",
+											"     pm.expect(target[2].id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target[2].title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target[2].annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target[2].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[2].paid).to.eql(false);",
+											"    pm.expect(target[2].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[2].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[2].views).to.eql(0);",
+											"    pm.expect(target[2].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[3].id.toString()).to.eql(nizhniyAdventureId);",
+											"    pm.expect(target[3].title).to.eql('Приключение на 5 минут');",
+											"    pm.expect(target[3].annotation).to.eql('Приключение в Нижнем Новгороде.');",
+											"    pm.expect(target[3].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[3].paid).to.eql(false);",
+											"    pm.expect(target[3].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[3].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[3].views).to.eql(0);",
+											"    pm.expect(target[3].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/events?location={{earthId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{earthId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all in Moscow",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(2);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/events?location={{moscowId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{moscowId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all in Moscow museum",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(1);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/events?location={{moscowMuseumId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{moscowMuseumId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all in Rome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const romeAdventureId = pm.collectionVariables.get('romeAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(1);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(romeAdventureId);",
+											"    pm.expect(target[0].title).to.eql('Приключение на 15 минут');",
+											"    pm.expect(target[0].annotation).to.eql('Приключение в Риме.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[0].paid).to.eql(false);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/events?location={{romeId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{romeId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find all in Earth",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {",
+											"    pm.response.to.be.ok;    ",
+											"    pm.response.to.be.withBody;",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"const target = pm.response.json();",
+											"const excursionId = pm.collectionVariables.get('excursionId');",
+											"const adventureId = pm.collectionVariables.get('adventureId');",
+											"const user1Id = pm.collectionVariables.get('user1Id');",
+											"const user2Id = pm.collectionVariables.get('user2Id');",
+											"const moscowExcursionId = pm.collectionVariables.get('moscowExcursionId');",
+											"const moscowAdventureId = pm.collectionVariables.get('moscowAdventureId');",
+											"const nizhniyExcursionId = pm.collectionVariables.get('nizhniyExcursionId');",
+											"const nizhniyAdventureId = pm.collectionVariables.get('nizhniyAdventureId');",
+											"const romeAdventureId = pm.collectionVariables.get('romeAdventureId');",
+											"",
+											"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {",
+											"    pm.expect(target.length).to.eql(5);",
+											"",
+											"    pm.expect(target[0].id.toString()).to.eql(moscowExcursionId);",
+											"    pm.expect(target[0].title).to.eql('Экскурсия по музею');",
+											"    pm.expect(target[0].annotation).to.eql('Экскурсия по музею в Москве.');",
+											"    pm.expect(target[0].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[0].paid).to.eql(true);",
+											"    pm.expect(target[0].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[0].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[0].views).to.eql(0);",
+											"    pm.expect(target[0].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[1].id.toString()).to.eql(moscowAdventureId);",
+											"    pm.expect(target[1].title).to.eql('Приключение на 10 минут');",
+											"    pm.expect(target[1].annotation).to.eql('Приключение в Москве.');",
+											"    pm.expect(target[1].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[1].paid).to.eql(false);",
+											"    pm.expect(target[1].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[1].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[1].views).to.eql(0);",
+											"    pm.expect(target[1].confirmedRequests).to.eql(0);",
+											"",
+											"     pm.expect(target[2].id.toString()).to.eql(nizhniyExcursionId);",
+											"    pm.expect(target[2].title).to.eql('Экскурсия по планетарию');",
+											"    pm.expect(target[2].annotation).to.eql('Экскурсия по планетарию в Нижнем Новгороде.');",
+											"    pm.expect(target[2].category.id.toString()).to.eql(excursionId);",
+											"    pm.expect(target[2].paid).to.eql(false);",
+											"    pm.expect(target[2].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[2].initiator.id.toString()).to.eql(user1Id);",
+											"    pm.expect(target[2].views).to.eql(0);",
+											"    pm.expect(target[2].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[3].id.toString()).to.eql(nizhniyAdventureId);",
+											"    pm.expect(target[3].title).to.eql('Приключение на 5 минут');",
+											"    pm.expect(target[3].annotation).to.eql('Приключение в Нижнем Новгороде.');",
+											"    pm.expect(target[3].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[3].paid).to.eql(false);",
+											"    pm.expect(target[3].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[3].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[3].views).to.eql(0);",
+											"    pm.expect(target[3].confirmedRequests).to.eql(0);",
+											"",
+											"    pm.expect(target[4].id.toString()).to.eql(romeAdventureId);",
+											"    pm.expect(target[4].title).to.eql('Приключение на 15 минут');",
+											"    pm.expect(target[4].annotation).to.eql('Приключение в Риме.');",
+											"    pm.expect(target[4].category.id.toString()).to.eql(adventureId);",
+											"    pm.expect(target[4].paid).to.eql(false);",
+											"    pm.expect(target[4].eventDate).to.eql('2024-12-31 15:10:05');",
+											"    pm.expect(target[4].initiator.id.toString()).to.eql(user2Id);",
+											"    pm.expect(target[4].views).to.eql(0);",
+											"    pm.expect(target[4].confirmedRequests).to.eql(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/admin/events?location={{earthId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"events"
+									],
+									"query": [
+										{
+											"key": "location",
+											"value": "{{earthId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "user1Id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "user2Id",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "excursionId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "adventureId",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "moscowExcursionId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "moscowAdventureId",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "nizhniyExcursionId",
+			"value": "3",
+			"type": "string"
+		},
+		{
+			"key": "nizhniyAdventureId",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "romeAdventureId",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"key": "russiaId",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "moscowId",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "nizhniyId",
+			"value": "3",
+			"type": "string"
+		},
+		{
+			"key": "moscowMuseumId",
+			"value": "4",
+			"type": "string"
+		},
+		{
+			"key": "nizhniyPlanetariumId",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"key": "romeId",
+			"value": "6",
+			"type": "string"
+		},
+		{
+			"key": "earthId",
+			"value": "7",
+			"type": "string"
+		},
+		{
+			"key": "norvegianSeaId",
+			"value": "8",
+			"type": "string"
+		},
+		{
+			"key": "somePlaceId",
+			"value": "9",
+			"type": "string"
+		}
+	]
+}
