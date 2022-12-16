@@ -58,17 +58,14 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
         Event event = findEventByIdOrThrow(eventId);
         checkEventOwnership(user, event);
         Request request = findByIdOrThrow(requestId);
-        long confirmedParticipantCount = requestRepository.findAllConfirmedRequests(eventId).orElse(0L);
+        long confirmedParticipantCount = requestRepository.findAllConfirmedRequestsCount(eventId).orElse(0L);
         if (confirmedParticipantCount >= event.getParticipantLimit()) {
             throw new ConditionsNotMetException("Participant limit reached");
         }
         request.setRequestState(RequestState.CONFIRMED);
         event.setConfirmedRequests(confirmedParticipantCount + 1);
         if (confirmedParticipantCount == event.getParticipantLimit() - 1) {
-            List<Request> pendingRequests = requestRepository.findAllPendingRequestsForEvent(eventId);
-            for (Request pendingRequest: pendingRequests) {
-                pendingRequest.setRequestState(RequestState.REJECTED);
-            }
+            requestRepository.rejectAllPendingByEventId(eventId);
         }
         return ParticipationRequestDto.from(request);
     }
@@ -106,7 +103,7 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
         if (!event.getEventState().equals(EventState.PUBLISHED)) {
             throw new ConditionsNotMetException("Can participate only in PUBLISHED events");
         }
-        Long confirmedRequests = requestRepository.findAllConfirmedRequests(eventId).orElse(0L);
+        Long confirmedRequests = requestRepository.findAllConfirmedRequestsCount(eventId).orElse(0L);
         if (confirmedRequests >= event.getParticipantLimit()) {
             throw new ConditionsNotMetException("Participant limit reached");
         }
@@ -132,7 +129,7 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
                     "requester for request with id = %d", userId, requestId));
         }
         request.setRequestState(RequestState.CANCELED);
-        event.setConfirmedRequests(requestRepository.findAllConfirmedRequests(event.getId()).orElse(0L));
+        event.setConfirmedRequests(requestRepository.findAllConfirmedRequestsCount(event.getId()).orElse(0L));
         return ParticipationRequestDto.from(request);
     }
 

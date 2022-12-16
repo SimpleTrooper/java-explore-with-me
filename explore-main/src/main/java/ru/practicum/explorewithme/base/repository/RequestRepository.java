@@ -11,17 +11,16 @@ import java.util.Optional;
  * Репозиторий запросов на участие в событии
  */
 public interface RequestRepository extends JpaRepository<Request, Long> {
-
     @Query("SELECT COUNT(r.id) " +
             "FROM Request AS r " +
             "WHERE r.requestState = 'CONFIRMED' AND r.event.id = ?1 " +
             "GROUP BY r.event.id")
-    Optional<Long> findAllConfirmedRequests(Long eventId);
+    Optional<Long> findAllConfirmedRequestsCount(Long eventId);
 
-    @Query("SELECT new Request(r.id, r.requester, r.event, r.requestState, r.createdOn) " +
-            "FROM Request AS r " +
+    @Query("UPDATE Request r " +
+            "SET r.requestState = 'REJECTED' " +
             "WHERE r.requestState = 'PENDING' AND r.event.id = ?1")
-    List<Request> findAllPendingRequestsForEvent(Long eventId);
+    void rejectAllPendingByEventId(Long eventId);
 
     List<Request> findAllByRequesterId(Long userId);
 

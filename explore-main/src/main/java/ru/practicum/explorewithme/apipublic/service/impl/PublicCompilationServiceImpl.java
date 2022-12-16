@@ -38,7 +38,7 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
         List<Compilation> compilations;
         if (pinned != null) {
             compilations = compilationRepository.findAllByPinned(pinned,
-                    paginationRequest.makeOffsetBasedByFieldAsc("id"));
+                    paginationRequest.makeOffsetBasedByFieldAsc("id")).toList();
         } else {
             compilations = compilationRepository.findAll(paginationRequest.makeOffsetBasedByFieldAsc("id")).toList();
         }
