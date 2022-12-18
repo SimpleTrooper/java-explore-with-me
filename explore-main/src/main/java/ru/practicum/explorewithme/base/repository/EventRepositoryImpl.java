@@ -1,14 +1,13 @@
 package ru.practicum.explorewithme.base.repository;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
 import ru.practicum.exploreclient.ExploreClientForStats;
 import ru.practicum.explorewithme.base.model.Event;
 import ru.practicum.explorewithme.base.model.EventWithViews;
 
-import javax.persistence.EntityManager;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,33 +15,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Кастомный репозиторий для получения числа подтвержденных участий и просмотров события
  */
+@Repository
 public class EventRepositoryImpl implements EventRepositoryCustom {
     private final EventRepository eventRepository;
     private final ExploreClientForStats exploreClientForStats;
-    private final JPAQueryFactory jpaQueryFactory;
 
     public EventRepositoryImpl(@Lazy EventRepository eventRepository,
-                               @Lazy ExploreClientForStats exploreClientForStats,
-                               @Lazy EntityManager entityManager) {
+                               @Lazy ExploreClientForStats exploreClientForStats) {
         this.eventRepository = eventRepository;
         this.exploreClientForStats = exploreClientForStats;
-        this.jpaQueryFactory = new JPAQueryFactory(entityManager);
     }
 
     @Override
     public List<EventWithViews> findAllByIdInWithViews(Collection<Long> ids) {
-        List<Event> events = eventRepository.findAllByIdIn(ids);
+        List<Event> events = eventRepository.findAllByIdIn(ids).stream()
+                .sorted(Comparator.comparingLong(Event::getId))
+                .collect(Collectors.toList());
         return makeEventsWithViews(events);
     }
 
     @Override
     public List<EventWithViews> findAllByInitiatorIdWithViews(Long initiatorId, Pageable pageable) {
-        List<Event> events = eventRepository.findAllByInitiatorId(initiatorId, pageable);
+        List<Event> events = eventRepository.findAllByInitiatorId(initiatorId, pageable).toList();
         return makeEventsWithViews(events);
     }
 
@@ -65,8 +63,7 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
     @Override
     public List<EventWithViews> findAllSortedByViews(BooleanBuilder booleanBuilder,
                                                      Pageable pageable) {
-        List<Event> events = StreamSupport.stream(eventRepository.findAll(booleanBuilder).spliterator(), false)
-                .collect(Collectors.toList());
+        List<Event> events = eventRepository.findAll(booleanBuilder);
 
         return makeEventsWithViews(events).stream()
                 .sorted(Comparator.comparingLong(EventWithViews::getViews).reversed())

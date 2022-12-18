@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,17 @@ import java.util.List;
 /**
  * Сущность подборки событий
  */
+@NamedEntityGraph(
+        name = "compilations-events-graph",
+        attributeNodes = @NamedAttributeNode(value = "events", subgraph = "events-subgraph"),
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "events-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("category"),
+                                @NamedAttributeNode("initiator")})
+        }
+)
 @Getter
 @Setter
 @AllArgsConstructor
