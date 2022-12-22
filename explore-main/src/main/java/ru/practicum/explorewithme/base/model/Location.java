@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 /**
@@ -27,6 +28,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "locations")
 public class Location {
+    @Version
+    @Column(name = "version")
+    private long version;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "location_id")

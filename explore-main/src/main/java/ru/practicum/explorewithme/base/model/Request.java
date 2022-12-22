@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 /**
@@ -39,6 +40,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "requests")
 public class Request {
+    @Version
+    @Column(name = "version")
+    private long version;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "request_id")
