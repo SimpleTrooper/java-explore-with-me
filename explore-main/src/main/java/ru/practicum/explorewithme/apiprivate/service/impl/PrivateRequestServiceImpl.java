@@ -112,8 +112,12 @@ public class PrivateRequestServiceImpl implements PrivateRequestService {
             requestState = RequestState.CONFIRMED;
             event.setConfirmedRequests(confirmedRequests + 1);
         }
-        Request request = new Request(null, user, event, requestState,
-                LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
+        Request request = Request.builder()
+                .requester(user)
+                .event(event)
+                .requestState(requestState)
+                .createdOn(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS))
+                .build();
         requestRepository.save(request);
         return ParticipationRequestDto.from(request);
     }

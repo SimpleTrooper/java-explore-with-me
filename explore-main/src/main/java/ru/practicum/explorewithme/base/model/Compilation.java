@@ -17,6 +17,7 @@ import javax.persistence.NamedAttributeNode;
 import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,10 @@ import java.util.List;
 @Entity
 @Table(name = "compilations")
 public class Compilation {
+    @Version
+    @Column(name = "version")
+    private long version;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "compilation_id")
@@ -57,4 +62,11 @@ public class Compilation {
             joinColumns = {@JoinColumn(name = "compilation_id")},
             inverseJoinColumns = {@JoinColumn(name = "event_id")})
     private List<Event> events = new ArrayList<>();
+
+    public Compilation(Long id, String title, Boolean pinned, List<Event> events) {
+        this.id = id;
+        this.title = title;
+        this.pinned = pinned;
+        this.events = events;
+    }
 }
